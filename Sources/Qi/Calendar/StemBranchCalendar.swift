@@ -214,7 +214,7 @@ public struct StemBranchCalendar {
     /// - Returns: 指定日期的日干支
     ///
     public func stemBranchOfDay(of date: Date) -> StemBranch {
-        let JD = Int(ceil(Constants.JDSince1970GMT + date.timeIntervalSince1970 / 86400))
+        let JD = lround(Constants.JDSince1970GMT + date.timeIntervalSince1970 / 86400)
         let day = 1 + ((JD - 11) % 60)
         let stemIndex = ((day - 1) % 10)
         let branchIndex = ((day - 1) % 12)
