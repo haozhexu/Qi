@@ -284,7 +284,35 @@ final class QiTests: XCTestCase {
         XCTAssertEqual(EarthlyBranch.xu.CNt, "戌")
         XCTAssertEqual(EarthlyBranch.hai.CNt, "亥")
 
+        XCTAssertEqual(EarthlyBranch.zi.zodiacAnimal.CNt, "鼠")
+        XCTAssertEqual(EarthlyBranch.chou.zodiacAnimal.CNt, "牛")
+        XCTAssertEqual(EarthlyBranch.yin.zodiacAnimal.CNt, "虎")
+        XCTAssertEqual(EarthlyBranch.mao.zodiacAnimal.CNt, "兔")
+        XCTAssertEqual(EarthlyBranch.chen.zodiacAnimal.CNt, "龍")
+        XCTAssertEqual(EarthlyBranch.si.zodiacAnimal.CNt, "蛇")
+        XCTAssertEqual(EarthlyBranch.wu.zodiacAnimal.CNt, "馬")
+        XCTAssertEqual(EarthlyBranch.wei.zodiacAnimal.CNt, "羊")
+        XCTAssertEqual(EarthlyBranch.shen.zodiacAnimal.CNt, "猴")
+        XCTAssertEqual(EarthlyBranch.you.zodiacAnimal.CNt, "雞")
+        XCTAssertEqual(EarthlyBranch.xu.zodiacAnimal.CNt, "狗")
+        XCTAssertEqual(EarthlyBranch.hai.zodiacAnimal.CNt, "豬")
+
         XCTAssertEqual(StemBranch(stem: .geng, branch: .zi).CNt, "庚子")
+    }
+
+    func testZodiacAnimals() {
+        XCTAssertEqual(EarthlyBranch.zi.zodiacAnimal, .rat)
+        XCTAssertEqual(EarthlyBranch.chou.zodiacAnimal, .ox)
+        XCTAssertEqual(EarthlyBranch.yin.zodiacAnimal, .tiger)
+        XCTAssertEqual(EarthlyBranch.mao.zodiacAnimal, .rabbit)
+        XCTAssertEqual(EarthlyBranch.chen.zodiacAnimal, .dragon)
+        XCTAssertEqual(EarthlyBranch.si.zodiacAnimal, .snake)
+        XCTAssertEqual(EarthlyBranch.wu.zodiacAnimal, .horse)
+        XCTAssertEqual(EarthlyBranch.wei.zodiacAnimal, .goat)
+        XCTAssertEqual(EarthlyBranch.shen.zodiacAnimal, .monkey)
+        XCTAssertEqual(EarthlyBranch.you.zodiacAnimal, .rooster)
+        XCTAssertEqual(EarthlyBranch.xu.zodiacAnimal, .dog)
+        XCTAssertEqual(EarthlyBranch.hai.zodiacAnimal, .pig)
     }
 }
 

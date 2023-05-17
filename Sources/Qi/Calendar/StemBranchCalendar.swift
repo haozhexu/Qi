@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum HeavenlyStem: Int, CaseIterable, Comparable {
+public enum HeavenlyStem: Int, CaseIterable {
     case jia    // 甲
     case yi     // 乙
     case bing   // 丙
@@ -18,13 +18,9 @@ public enum HeavenlyStem: Int, CaseIterable, Comparable {
     case xin    // 辛
     case ren    // 壬
     case gui    // 癸
-
-    public static func < (lhs: HeavenlyStem, rhs: HeavenlyStem) -> Bool {
-        lhs.rawValue < rhs.rawValue
-    }
 }
 
-public enum EarthlyBranch: Int, CaseIterable, Comparable {
+public enum EarthlyBranch: Int, CaseIterable {
     case zi     // 子
     case chou   // 丑
     case yin    // 寅
@@ -37,15 +33,26 @@ public enum EarthlyBranch: Int, CaseIterable, Comparable {
     case you    // 酉
     case xu     // 戌
     case hai    // 亥
+}
 
-    public static func < (lhs: EarthlyBranch, rhs: EarthlyBranch) -> Bool {
-        lhs.rawValue < rhs.rawValue
-    }
+public enum ZodiacAnimal: CaseIterable {
+    case rat
+    case ox
+    case tiger
+    case rabbit
+    case dragon
+    case snake
+    case horse
+    case goat
+    case monkey
+    case rooster
+    case dog
+    case pig
 }
 
 public struct StemBranch: Equatable {
-    let stem: HeavenlyStem
-    let branch: EarthlyBranch
+    public let stem: HeavenlyStem
+    public let branch: EarthlyBranch
 
     public init(stem: HeavenlyStem, branch: EarthlyBranch) {
         self.stem = stem
@@ -117,6 +124,36 @@ public extension StemBranch {
 }
 
 public extension EarthlyBranch {
+
+    var zodiacAnimal: ZodiacAnimal {
+        switch self {
+        case .zi:
+            return .rat
+        case .chou:
+            return .ox
+        case .yin:
+            return .tiger
+        case .mao:
+            return .rabbit
+        case .chen:
+            return .dragon
+        case .si:
+            return .snake
+        case .wu:
+            return .horse
+        case .wei:
+            return .goat
+        case .shen:
+            return .monkey
+        case .you:
+            return .rooster
+        case .xu:
+            return .dog
+        case .hai:
+            return .pig
+        }
+    }
+
     static func fromTwentyFourHours(_ hours: Int) -> EarthlyBranch {
         let hourBranchIndex = (hours + 1) / 2 % 12
         return EarthlyBranch.allCases[hourBranchIndex]

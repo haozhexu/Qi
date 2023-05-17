@@ -24,7 +24,7 @@ public extension LanguageText {
 }
 
 extension YinYang: LanguageTextListProviding {
-    func iterableCasesText(for language: Language) -> [String] {
+    public func iterableCasesText(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["阴", "阳"]
@@ -37,7 +37,7 @@ extension YinYang: LanguageTextListProviding {
 }
 
 extension Element: LanguageTextListProviding {
-    func iterableCasesText(for language: Language) -> [String] {
+    public func iterableCasesText(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["木", "火", "土", "金", "水"]
@@ -50,8 +50,7 @@ extension Element: LanguageTextListProviding {
 }
 
 extension HeavenlyStem: LanguageTextListProviding {
-
-    func iterableCasesText(for language: Language) -> [String] {
+    public func iterableCasesText(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"]
@@ -64,8 +63,7 @@ extension HeavenlyStem: LanguageTextListProviding {
 }
 
 extension EarthlyBranch: LanguageTextListProviding {
-
-    func iterableCasesText(for language: Language) -> [String] {
+    public func iterableCasesText(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
@@ -117,7 +115,7 @@ extension PhasedYinYang: LanguageText {
 }
 
 extension Qi: LanguageTextListProviding {
-    func iterableCasesText(for language: Language) -> [String] {
+    public func iterableCasesText(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["厥阴风木", "少阴君火", "太阴湿土", "少阳相火", "阳明燥金", "太阳寒水"]
@@ -135,7 +133,7 @@ extension Qi: LanguageTextListProviding {
 }
 
 extension Qi.Factor: LanguageTextListProviding {
-    func iterableCasesText(for language: Language) -> [String] {
+    public func iterableCasesText(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["风", "热", "火", "湿", "燥", "寒"]
@@ -169,7 +167,7 @@ extension Qi.Compound: LanguageText {
 }
 
 extension Qi.Adequacy: LanguageTextListProviding {
-    func iterableCasesText(for language: Language) -> [String] {
+    public func iterableCasesText(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["太过", "不及"]
@@ -187,7 +185,7 @@ extension Qi.ElementAndAdequacy: LanguageText {
     }
 }
 
-protocol LanguageTextListProviding: LanguageText, CaseIterable, Equatable {
+public protocol LanguageTextListProviding: LanguageText, CaseIterable, Equatable {
     func iterableCasesText(for language: Language) -> [String]
 }
 
@@ -198,6 +196,19 @@ extension LanguageTextListProviding {
         }
         let text = iterableCasesText(for: language)
         return text[index]
+    }
+}
+
+extension ZodiacAnimal: LanguageTextListProviding {
+    public func iterableCasesText(for language: Language) -> [String] {
+        switch language {
+        case .zhHans:
+            return ["鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"]
+        case .zhHant:
+            return ["鼠", "牛", "虎", "兔", "龍", "蛇", "馬", "羊", "猴", "雞", "狗", "豬"]
+        case .en:
+            return ["Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"]
+        }
     }
 }
 
