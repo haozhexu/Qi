@@ -21,11 +21,25 @@ public struct LunarCalendar {
         public let month: Int
         public let day: Int
         public let hour: EarthlyBranch
+        public let isLeapMonth: Bool
         public let solarTerm: SolarTerm?
 
         /// 黃帝紀元
         public var yellowEmperorYear: Int {
             era * 60 + year
+        }
+
+        public var lastDayOfMonth: Int? {
+            let chinese = Calendar(identifier: .chinese)
+            guard let date = DateComponents(calendar: chinese, era: era, year: year, month: month).date else {
+                return nil
+            }
+            let components = DateComponents(calendar: chinese, month: 1, second: -1)
+            guard let lastDay = chinese.date(byAdding: components, to: date) else {
+                return nil
+            }
+            let dateComponents = chinese.dateComponents([.day], from: lastDay)
+            return dateComponents.day
         }
     }
 
@@ -56,6 +70,7 @@ public struct LunarCalendar {
                          month: month,
                          day: day,
                          hour: hourBranch,
+                         isLeapMonth: comps.isLeapMonth == true,
                          solarTerm: SolarTerm.of(date))
     }
 }

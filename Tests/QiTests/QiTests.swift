@@ -272,6 +272,14 @@ final class QiTests: XCTestCase {
         }
     }
 
+    func testLunarCalendar() {
+        let date = Date(year: 2023, month: 3, day: 22)
+        let lunarDate = LunarCalendar().lunarDate(from: date)
+        XCTAssertTrue(lunarDate.isLeapMonth)
+        XCTAssertEqual(lunarDate.lastDayOfMonth, 30)
+        XCTAssertEqual(lunarDate.monthAndDayText(of: .zhHant), "閏二月初一")
+    }
+
     func testLanguages() {
         XCTAssertEqual(HeavenlyStem.jia.CNt, "甲")
         XCTAssertEqual(HeavenlyStem.yi.CNt, "乙")
@@ -311,6 +319,11 @@ final class QiTests: XCTestCase {
         XCTAssertEqual(EarthlyBranch.hai.zodiacAnimal.CNt, "豬")
 
         XCTAssertEqual(StemBranch(stem: .geng, branch: .zi).CNt, "庚子")
+
+        XCTAssertEqual(LunarCalendar.LunarDate(month: 1, day: 1).monthAndDayText(of: .zhHant), "正月初一")
+        XCTAssertEqual(LunarCalendar.LunarDate(month: 1, day: 30).monthAndDayText(of: .zhHant), "正月三十")
+        XCTAssertEqual(LunarCalendar.LunarDate(month: 2, day: 29).monthAndDayText(of: .zhHant), "二月廿九")
+        XCTAssertEqual(LunarCalendar.LunarDate(month: 12, day: 30).monthAndDayText(of: .zhHant), "臘月三十")
     }
 
     func testZodiacAnimals() {
@@ -343,5 +356,11 @@ private extension Date {
             preconditionFailure("Cannot create date for year \(year) month \(month) day \(day) hour \(hour) with calendar \(calendar)!")
         }
         self = date
+    }
+}
+
+private extension LunarCalendar.LunarDate {
+    init(month: Int, day: Int) {
+        self = .init(era: 1, year: 1, month: month, day: day, hour: .zi, isLeapMonth: false, solarTerm: nil)
     }
 }

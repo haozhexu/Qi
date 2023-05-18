@@ -212,6 +212,53 @@ extension ZodiacAnimal: LanguageTextListProviding {
     }
 }
 
+public enum LunarDateTextHolder: LanguageText {
+    case day(Int)
+    case month(Int, Bool)
+
+    public func text(of language: Language) -> String {
+        switch self {
+        case let .day(day):
+            return language == .en ? String(day) : Constants.dayTextZHHan[day - 1]
+        case let .month(month, isLeap):
+            switch language {
+            case .zhHans:
+                return (isLeap ? "闰" : "") + Constants.monthTextZHHans[month - 1] + "月"
+            case .zhHant:
+                return (isLeap ? "閏" : "") + Constants.monthTextZHHant[month - 1] + "月"
+            case .en:
+                return String(month)
+            }
+        }
+    }
+
+    private enum Constants {
+        static let dayTextZHHan = ["初一", "初二", "初三", "初四", "初五",
+                                   "初六", "初七", "初八", "初九", "初十",
+                                   "十一", "十二", "十三", "十四", "十五",
+                                   "十六", "十七", "十八", "十九", "二十",
+                                   "廿一", "廿二", "廿三", "廿四", "廿五",
+                                   "廿六", "廿七", "廿八", "廿九", "三十"]
+        static let monthTextZHHant = ["正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "臘"]
+        static let monthTextZHHans = ["正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "腊"]
+    }
+}
+
+public extension LunarCalendar.LunarDate {
+
+    var monthText: LunarDateTextHolder {
+        .month(month, isLeapMonth)
+    }
+
+    var dayText: LunarDateTextHolder {
+        .day(day)
+    }
+
+    func monthAndDayText(of language: Language) -> String {
+        monthText.text(of: language) + dayText.text(of: language)
+    }
+}
+
 // MARK: - Debug
 
 private let debugStringLanguage: Language = .zhHant
