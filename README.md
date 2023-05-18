@@ -126,8 +126,10 @@ public func lunarDate(from date: Date) -> LunarDate
 干支紀年，週期第一年為「甲子」（如黃巾起事口號為「歲在甲子，天下大吉」），第二年為「乙醜」，依此類推，60年一週期；週期完了重復使用，周而復始，循環下去。
 
 ```swift
-StemBranchCalendar(calculateMonthBasedOn: MonthCalculation = .solarTerm)
+StemBranchCalendar(calculateMonthBasedOn: MonthCalculation = .solarTerm, timeZone: TimeZone = .current)
 ```
+
+因為日干支是以儒略曆1970年的日期作為參照，因此可以設置需要的時區，默認使用當前時區。
 
 干支歷可提供計算月支的方法，默認以二十四節氣分月計算。
 

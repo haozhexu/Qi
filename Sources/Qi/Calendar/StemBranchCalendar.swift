@@ -215,10 +215,12 @@ public struct StemBranchCalendar {
     }
 
     /// 默認按照二十四節氣計算月支
-    public let calculateMonthBasedOn: MonthCalculation
+    public var calculateMonthBasedOn: MonthCalculation
+    public var timeZone: TimeZone
 
-    public init(calculateMonthBasedOn: MonthCalculation = .solarTerm) {
+    public init(calculateMonthBasedOn: MonthCalculation = .solarTerm, timeZone: TimeZone = .current) {
         self.calculateMonthBasedOn = calculateMonthBasedOn
+        self.timeZone = timeZone
     }
 
     /// 計算指定日期的干支
@@ -251,7 +253,7 @@ public struct StemBranchCalendar {
     /// - Returns: 指定日期的日干支
     ///
     public func stemBranchOfDay(of date: Date) -> StemBranch {
-        let JD = lround(Constants.JDSince1970GMT + date.timeIntervalSince1970 / 86400)
+        let JD = lround(Constants.JDOn1970GMTMidDay + date.timeIntervalSince1970 / 86400 + Double(timeZone.secondsFromGMT()) / Constants.secondsPerDay)
         let day = 1 + ((JD - 11) % 60)
         let stemIndex = ((day - 1) % 10)
         let branchIndex = ((day - 1) % 12)
@@ -317,6 +319,7 @@ public struct StemBranchCalendar {
     }
 
     private enum Constants {
-        static let JDSince1970GMT = 2440587.5
+        static let JDOn1970GMTMidDay = 2440587.5
+        static let secondsPerDay = 24.0 * 60 * 60
     }
 }

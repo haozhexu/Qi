@@ -225,6 +225,19 @@ final class QiTests: XCTestCase {
         XCTAssertEqual(lunarDate.year, .guimao)
         XCTAssertEqual(lunarDate.month, .bingchen)
         XCTAssertEqual(lunarDate.day, .jiaxu)
+
+        var currentTimeZone = StemBranchCalendar()
+        guard let timeZonePlus10 = TimeZone(secondsFromGMT: 10 * 60 * 60) else {
+            preconditionFailure("Cannot create timezone with 10 hours from GMT!")
+        }
+
+        currentTimeZone.timeZone = timeZonePlus10
+
+        XCTAssertEqual(currentTimeZone.stemBranchDate(of: Date(year: 2023, month: 5, day: 6, hour: 0, timeZone: timeZonePlus10)).day, .jiazi)
+        XCTAssertEqual(currentTimeZone.stemBranchDate(of: Date(year: 2023, month: 5, day: 17, hour: 23, timeZone: timeZonePlus10)).day, .yihai)
+        XCTAssertEqual(currentTimeZone.stemBranchDate(of: Date(year: 2023, month: 5, day: 18, hour: 0, timeZone: timeZonePlus10)).day, .bingzi)
+        XCTAssertEqual(currentTimeZone.stemBranchDate(of: Date(year: 2023, month: 5, day: 18, hour: 23, timeZone: timeZonePlus10)).day, .bingzi)
+        XCTAssertEqual(currentTimeZone.stemBranchDate(of: Date(year: 2023, month: 5, day: 19, hour: 0, timeZone: timeZonePlus10)).day, .dingchou)
     }
 
     func testSolarTerms() {
@@ -318,9 +331,9 @@ final class QiTests: XCTestCase {
 
 private extension Date {
 
-    init(year: Int, month: Int, day: Int, hour: Int = 12, calendar: Calendar = .init(identifier: .gregorian)) {
+    init(year: Int, month: Int, day: Int, hour: Int = 12, calendar: Calendar = .init(identifier: .gregorian), timeZone: TimeZone? = .init(secondsFromGMT: 0)) {
         var components = DateComponents()
-        components.timeZone = TimeZone(secondsFromGMT: 0)
+        components.timeZone = timeZone
         components.year = year
         components.month = month
         components.day = day
