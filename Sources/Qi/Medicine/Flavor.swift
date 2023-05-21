@@ -6,7 +6,7 @@
 //
 
 /// 五味
-public enum Flavor {
+public enum Flavor: String, CaseIterable, Equatable {
 
     /// 甘
     case sweet

@@ -8,7 +8,7 @@
 public enum Organ {
 
     // 臟
-    public enum Zang: CaseIterable {
+    public enum Zang: String, CaseIterable, Equatable {
         case liver              // 肝
         case heart              // 心
         case spleen             // 脾
@@ -17,7 +17,7 @@ public enum Organ {
     }
 
     // 腑
-    public enum Fu: CaseIterable {
+    public enum Fu: String, CaseIterable, Equatable {
         case gallBladder        // 膽
         case stomach            // 胃
         case largeIntestine     // 大腸

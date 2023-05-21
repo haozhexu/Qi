@@ -38,7 +38,7 @@ public enum Qi: Equatable, CaseIterable {
     /// 六氣是氣候變化的本源，三陰三陽是氣候變化的標象。
     /// 六氣與三陰三陽的關係為風化厥陰，熱化少陰，濕化太陰，火化少陽，燥化陽明，寒化太陽。
     /// 六氣時至氣至，便為宇宙間的六種正氣；如果化非其時，便為邪氣，即氣象學上的災害性天氣。
-    public enum Factor: CaseIterable, Equatable {
+    public enum Factor: String, CaseIterable, Equatable {
 
         /// 风
         case wind

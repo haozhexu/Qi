@@ -6,7 +6,7 @@
 //
 
 /// 四季
-public enum Season {
+public enum Season: String, CaseIterable, Equatable {
     case spring
     case summer
     case autumn
