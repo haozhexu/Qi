@@ -259,6 +259,19 @@ public extension LunarCalendar.LunarDate {
     }
 }
 
+extension LunarCalendar.Holiday: LanguageTextListProviding {
+    public func iterableCasesText(for language: Language) -> [String] {
+        switch language {
+        case .zhHans:
+            return ["春节", "元宵节", "龙抬头", "上巳节", "清明节", "端午节", "七夕节", "中元节", "中秋节", "重阳节", "除夕"]
+        case .zhHant:
+            return ["春節", "元宵節", "龍抬頭", "上巳節", "清明節", "端午節", "七夕節", "中元節", "中秋節", "重陽節", "除夕"]
+        case .en:
+            return ["Spring Festival", "Lantern Festival", "Dragon Head-Raising Festival", "Double Third Festival", "Tomb Sweeping Festival", "Dragon Boat Festival", "Qixi", "Hungry Ghost Festival", "Mid-Autumn Festival", "Double Ninth Festival", "Spring Festival Eve"]
+        }
+    }
+}
+
 // MARK: - Debug
 
 private let debugStringLanguage: Language = .zhHant

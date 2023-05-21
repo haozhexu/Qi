@@ -322,10 +322,22 @@ final class QiTests: XCTestCase {
 
         XCTAssertEqual(StemBranch(stem: .geng, branch: .zi).CNt, "庚子")
 
-        XCTAssertEqual(LunarCalendar.LunarDate(month: 1, day: 1).monthAndDayText(of: .zhHant), "正月初一")
-        XCTAssertEqual(LunarCalendar.LunarDate(month: 1, day: 30).monthAndDayText(of: .zhHant), "正月三十")
-        XCTAssertEqual(LunarCalendar.LunarDate(month: 2, day: 29).monthAndDayText(of: .zhHant), "二月廿九")
-        XCTAssertEqual(LunarCalendar.LunarDate(month: 12, day: 30).monthAndDayText(of: .zhHant), "臘月三十")
+        XCTAssertEqual(LunarDate(month: 1, day: 1).monthAndDayText(of: .zhHant), "正月初一")
+        XCTAssertEqual(LunarDate(month: 1, day: 30).monthAndDayText(of: .zhHant), "正月三十")
+        XCTAssertEqual(LunarDate(month: 2, day: 29).monthAndDayText(of: .zhHant), "二月廿九")
+        XCTAssertEqual(LunarDate(month: 12, day: 30).monthAndDayText(of: .zhHant), "臘月三十")
+
+        XCTAssertEqual(LunarCalendar.Holiday.springFestival.text(of: .zhHant), "春節")
+        XCTAssertEqual(LunarCalendar.Holiday.lanternFestival.text(of: .zhHant), "元宵節")
+        XCTAssertEqual(LunarCalendar.Holiday.dragonHeadRaisingDay.text(of: .zhHant), "龍抬頭")
+        XCTAssertEqual(LunarCalendar.Holiday.doubleThirdFestival.text(of: .zhHant), "上巳節")
+        XCTAssertEqual(LunarCalendar.Holiday.tombSweepingDay.text(of: .zhHant), "清明節")
+        XCTAssertEqual(LunarCalendar.Holiday.dragonBoatFestival.text(of: .zhHant), "端午節")
+        XCTAssertEqual(LunarCalendar.Holiday.qixi.text(of: .zhHant), "七夕節")
+        XCTAssertEqual(LunarCalendar.Holiday.hungryGhostFestival.text(of: .zhHant), "中元節")
+        XCTAssertEqual(LunarCalendar.Holiday.midAutumnDay.text(of: .zhHant), "中秋節")
+        XCTAssertEqual(LunarCalendar.Holiday.doubleNinthFestival.text(of: .zhHant), "重陽節")
+        XCTAssertEqual(LunarCalendar.Holiday.springFestivalEve.text(of: .zhHant), "除夕")
     }
 
     func testZodiacAnimals() {
