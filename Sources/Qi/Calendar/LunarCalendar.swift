@@ -10,7 +10,7 @@ import Foundation
 public struct LunarCalendar {
 
     /// 傳統節日
-    public enum Holiday: Equatable {
+    public enum Holiday: Equatable, CaseIterable {
 
         /// 春節，農曆正月初一
         case springFestival
