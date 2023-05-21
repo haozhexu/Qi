@@ -11,7 +11,7 @@ public protocol Elemental {
 
 /// 五行
 /// 此處“木”命名為tree而非wod，皆因五行中木色青，对应春，方位东，主生发、生长、舒畅。《黄帝内经》有句话叫：木曰曲直。
-public enum Element: CaseIterable, Equatable {
+public enum Element: String, CaseIterable, Equatable {
     case tree                   // 木
     case fire                   // 火
     case earth                  // 土

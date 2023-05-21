@@ -8,7 +8,7 @@
 import Foundation
 
 /// 二十四節
-public enum SolarTerm: CaseIterable, Comparable {
+public enum SolarTerm: String, CaseIterable, Equatable {
 
     /// 立春
     /// when spring begins

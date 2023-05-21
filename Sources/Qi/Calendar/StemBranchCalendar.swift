@@ -35,7 +35,7 @@ public enum EarthlyBranch: Int, CaseIterable {
     case hai    // 亥
 }
 
-public enum ZodiacAnimal: CaseIterable {
+public enum ZodiacAnimal: String, CaseIterable, Equatable {
     case rat
     case ox
     case tiger

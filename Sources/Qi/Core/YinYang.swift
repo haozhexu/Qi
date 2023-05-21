@@ -5,7 +5,7 @@
 //  Created by Haozhe XU on 21/4/2023.
 //
 
-public enum YinYang: CaseIterable, Equatable {
+public enum YinYang: String, CaseIterable, Equatable {
     case yin                    // 陰
     case yang                   // 陽
 }

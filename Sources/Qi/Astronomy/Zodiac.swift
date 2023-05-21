@@ -6,7 +6,7 @@
 //
 
 /// 星座
-public enum Zodiac {
+public enum Zodiac: String, CaseIterable, Equatable {
 
     /// 白羊，0
     case aries
