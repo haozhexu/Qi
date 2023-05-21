@@ -3,6 +3,8 @@ import XCTest
 
 final class QiTests: XCTestCase {
 
+    typealias LunarDate = LunarCalendar.LunarDate
+
     /// 陰陽
     func testYinYang() {
         XCTAssertEqual(!YinYang.yin, .yang)
@@ -340,6 +342,25 @@ final class QiTests: XCTestCase {
         XCTAssertEqual(EarthlyBranch.xu.zodiacAnimal, .dog)
         XCTAssertEqual(EarthlyBranch.hai.zodiacAnimal, .pig)
     }
+
+    func testLunarHolidays() {
+        XCTAssertEqual(LunarDate(month: 1, day: 1).holiday, .springFestival)
+        XCTAssertEqual(LunarDate(month: 1, day: 15).holiday, .lanternFestival)
+        XCTAssertEqual(LunarDate(month: 2, day: 2).holiday, .dragonHeadRaisingDay)
+        XCTAssertEqual(LunarDate(month: 3, day: 3).holiday, .doubleThirdFestival)
+        XCTAssertEqual(LunarDate(month: 4, day: 5).holiday, .tombSweepingDay)
+        XCTAssertEqual(LunarDate(month: 5, day: 5).holiday, .dragonBoatFestival)
+        XCTAssertEqual(LunarDate(month: 7, day: 7).holiday, .qixi)
+        XCTAssertEqual(LunarDate(month: 7, day: 15).holiday, .hungryGhostFestival)
+        XCTAssertEqual(LunarDate(month: 8, day: 15).holiday, .midAutumnDay)
+        XCTAssertEqual(LunarDate(month: 9, day: 9).holiday, .doubleNinthFestival)
+
+        // 十二月大
+        XCTAssertEqual(Date(year: 2023, month: 1, day: 21).lunarDate().holiday, .springFestivalEve)
+
+        // 十二月小
+        XCTAssertEqual(Date(year: 2022, month: 1, day: 31).lunarDate().holiday, .springFestivalEve)
+    }
 }
 
 private extension Date {
@@ -362,5 +383,11 @@ private extension Date {
 private extension LunarCalendar.LunarDate {
     init(month: Int, day: Int) {
         self = .init(era: 1, year: 1, month: month, day: day, hour: .zi, isLeapMonth: false, solarTerm: nil)
+    }
+}
+
+private extension Date {
+    func lunarDate() -> LunarCalendar.LunarDate {
+        LunarCalendar().lunarDate(from: self)
     }
 }
