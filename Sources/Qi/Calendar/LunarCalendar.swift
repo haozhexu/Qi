@@ -9,6 +9,43 @@ import Foundation
 
 public struct LunarCalendar {
 
+    /// 傳統節日
+    public enum Holiday: Equatable {
+
+        /// 春節，農曆正月初一
+        case springFestival
+
+        /// 元宵節，農曆正月十五
+        case lanternFestival
+
+        /// 龍抬頭，農曆二月初二
+        case dragonHeadRaisingDay
+
+        /// 上巳節，農曆三月初三
+        case doubleThirdFestival
+
+        /// 清明節，農曆四月五日前後
+        case tombSweepingDay
+
+        /// 端午節，農曆五月初五
+        case dragonBoatFestival
+
+        /// 七夕節，農曆七月初七
+        case qixi
+
+        /// 中元節，農曆七月十五
+        case hungryGhostFestival
+
+        /// 中秋節，農曆八月十五
+        case midAutumnDay
+
+        /// 重陽節，農曆九月初九
+        case doubleNinthFestival
+
+        /// 除夕，農曆十二月廿九或三十
+        case springFestivalEve
+    }
+
     /// 農曆日期
     /// 年月日時以及日期對應的節氣
     public struct LunarDate: Equatable {
@@ -40,6 +77,25 @@ public struct LunarCalendar {
             }
             let dateComponents = chinese.dateComponents([.day], from: lastDay)
             return dateComponents.day
+        }
+
+        /// 此日期所對應之傳統節日
+        public var holiday: Holiday? {
+            switch (month, day) {
+            case (1, 1): return .springFestival
+            case (1, 15): return .lanternFestival
+            case (2, 2): return .dragonHeadRaisingDay
+            case (3, 3): return .doubleThirdFestival
+            case (4, 5): return .tombSweepingDay
+            case (5, 5): return .dragonBoatFestival
+            case (7, 7): return .qixi
+            case (7, 15): return .hungryGhostFestival
+            case (8, 15): return .midAutumnDay
+            case (9, 9): return .doubleNinthFestival
+            case (12, 30) where lastDayOfMonth == 30: return .springFestivalEve
+            case (12, 29) where lastDayOfMonth == 29: return .springFestivalEve
+            default: return nil
+            }
         }
     }
 
