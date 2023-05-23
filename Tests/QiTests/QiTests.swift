@@ -267,7 +267,10 @@ final class QiTests: XCTestCase {
             Date(year: 1901, month: 11, day: 8): .winterBegins,
             Date(year: 1901, month: 11, day: 23): .lightSnow,
             Date(year: 1901, month: 12, day: 8): .heavySnow,
-            Date(year: 1901, month: 12, day: 22): .winterSolstice
+            Date(year: 1901, month: 12, day: 22): .winterSolstice,
+            Date(year: 2023, month: 4, day: 5): .clearAndBright,
+            Date(year: 2100, month: 1, day: 5): .slightCold,
+            Date(year: 2100, month: 12, day: 22): .winterSolstice,
         ]
         dateSolarTerms.forEach { date, solarTerm in
             XCTAssertEqual(SolarTerm.of(date), solarTerm)
@@ -360,7 +363,8 @@ final class QiTests: XCTestCase {
         XCTAssertEqual(LunarDate(month: 1, day: 15).holiday, .lanternFestival)
         XCTAssertEqual(LunarDate(month: 2, day: 2).holiday, .dragonHeadRaisingDay)
         XCTAssertEqual(LunarDate(month: 3, day: 3).holiday, .doubleThirdFestival)
-        XCTAssertEqual(LunarDate(month: 4, day: 5).holiday, .tombSweepingDay)
+        XCTAssertEqual(LunarCalendar().lunarDate(from: Date(year: 2023, month: 4, day: 5)).holiday,
+                       .tombSweepingDay)
         XCTAssertEqual(LunarDate(month: 5, day: 5).holiday, .dragonBoatFestival)
         XCTAssertEqual(LunarDate(month: 7, day: 7).holiday, .qixi)
         XCTAssertEqual(LunarDate(month: 7, day: 15).holiday, .hungryGhostFestival)
@@ -377,7 +381,7 @@ final class QiTests: XCTestCase {
 
 private extension Date {
 
-    init(year: Int, month: Int, day: Int, hour: Int = 12, calendar: Calendar = .init(identifier: .gregorian), timeZone: TimeZone? = .init(secondsFromGMT: 0)) {
+    init(year: Int, month: Int, day: Int, hour: Int = 12, calendar: Calendar = .init(identifier: .gregorian), timeZone: TimeZone? = .init(secondsFromGMT: 8)) {
         var components = DateComponents()
         components.timeZone = timeZone
         components.year = year
