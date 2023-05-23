@@ -86,7 +86,6 @@ public struct LunarCalendar {
             case (1, 15): return .lanternFestival
             case (2, 2): return .dragonHeadRaisingDay
             case (3, 3): return .doubleThirdFestival
-            case (4, 5): return .tombSweepingDay
             case (5, 5): return .dragonBoatFestival
             case (7, 7): return .qixi
             case (7, 15): return .hungryGhostFestival
@@ -94,6 +93,7 @@ public struct LunarCalendar {
             case (9, 9): return .doubleNinthFestival
             case (12, 30) where lastDayOfMonth == 30: return .springFestivalEve
             case (12, 29) where lastDayOfMonth == 29: return .springFestivalEve
+            case (_, _) where solarTerm == .clearAndBright: return .tombSweepingDay
             default: return nil
             }
         }

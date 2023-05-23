@@ -259,6 +259,42 @@ public extension LunarCalendar.LunarDate {
     }
 }
 
+extension SolarTerm: LanguageTextListProviding {
+    public func iterableCasesText(for language: Language) -> [String] {
+        switch language {
+        case .zhHans:
+            return ["立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至", "小寒", "大寒"]
+        case .zhHant:
+            return ["立春", "雨水", "驚蟄", "春分", "清明", "谷雨", "立夏", "小滿", "芒種", "夏至", "小暑", "大暑", "立秋", "處暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至", "小寒", "大寒"]
+        case .en:
+            return ["Spring Begins",
+                    "The Rains",
+                    "Insects Awaken",
+                    "Vernal Equinox",
+                    "Clear And Bright",
+                    "Grain Rain",
+                    "Summer Begins",
+                    "Grain Buds",
+                    "Grain In Ear",
+                    "Summer Solstice",
+                    "Slight Heat",
+                    "Great Heat",
+                    "Autumn Begins",
+                    "Heat Stops",
+                    "White Dews",
+                    "Autumn Equinox",
+                    "Cold Dews",
+                    "Frost Falls",
+                    "Winter Begins",
+                    "Light Snow",
+                    "Heavy Snow",
+                    "Winter Solstice",
+                    "Slight Cold",
+                    "Great Cold"]
+        }
+    }
+}
+
 extension LunarCalendar.Holiday: LanguageTextListProviding {
     public func iterableCasesText(for language: Language) -> [String] {
         switch language {
