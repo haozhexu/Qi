@@ -308,6 +308,30 @@ extension LunarCalendar.Holiday: LanguageTextListProviding {
     }
 }
 
+extension Meridian: LanguageTextListProviding {
+    public func iterableCasesText(for language: Language) -> [String] {
+        switch language {
+        case .zhHans:
+            return ["手太阴肺经", "手少阴心经", "手厥阴心包经", "手少阳三焦经", "手太阳小肠经", "手阳明大肠经", "足太阴脾经", "足少阴肾经", "足厥阴肝经", "足少阳胆经", "足太阳膀胱经", "足阳明胃经"]
+        case .zhHant:
+            return ["手太陰肺經", "手少陰心經", "手厥陰心包經", "手少陽三焦經", "手太陽小腸經", "手陽明大腸經", "足太陰脾經", "足少陰腎經", "足厥陰肝經", "足少陽膽經", "足太陽膀胱經", "足陽明胃經"]
+        case .en:
+            return ["Taiyin Lung Channel of Hand",
+                    "Shaoyin Heart Channel of Hand",
+                    "Jueyin Pericardium Channel of Hand",
+                    "Shaoyang Sanjiao Channel of Hand",
+                    "Taiyang Small Intestine Channel of Hand",
+                    "Yangming Large Intestine Channel of Hand",
+                    "Taiyin Spleen Channel of Foot",
+                    "Shaoyin Kidney Channel of Foot",
+                    "Jueyin Liver Channel of Foot",
+                    "Shaoyang Gallbladder Channel of Foot",
+                    "Taiyang Bladder Channel of Foot",
+                    "Yangming Stomach Channel of Foot"]
+        }
+    }
+}
+
 // MARK: - Debug
 
 private let debugStringLanguage: Language = .zhHant

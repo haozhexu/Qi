@@ -377,6 +377,34 @@ final class QiTests: XCTestCase {
         // 十二月小
         XCTAssertEqual(Date(year: 2022, month: 1, day: 31).lunarDate().holiday, .springFestivalEve)
     }
+
+    func testMeridianCycle() {
+        XCTAssertEqual(EarthlyBranch.zi.meridianOnDuty, .shaoyangGallBladderChannelOfFoot)
+        XCTAssertEqual(EarthlyBranch.chou.meridianOnDuty, .jueyinLiverChannelOfFoot)
+        XCTAssertEqual(EarthlyBranch.yin.meridianOnDuty, .taiyinLungChannelOfHand)
+        XCTAssertEqual(EarthlyBranch.mao.meridianOnDuty, .yangmingLargeIntestineChannelOfHand)
+        XCTAssertEqual(EarthlyBranch.chen.meridianOnDuty, .yangmingStomachChannelOfFoot)
+        XCTAssertEqual(EarthlyBranch.si.meridianOnDuty, .taiyinSpleenChannelOfFoot)
+        XCTAssertEqual(EarthlyBranch.wu.meridianOnDuty, .shaoyinHeartChannelOfHand)
+        XCTAssertEqual(EarthlyBranch.wei.meridianOnDuty, .taiyangSmallIntestineChannelOfHand)
+        XCTAssertEqual(EarthlyBranch.shen.meridianOnDuty, .taiyangUrinaryBladderChannelOfFoot)
+        XCTAssertEqual(EarthlyBranch.you.meridianOnDuty, .shaoyinKidneyChannelOfFoot)
+        XCTAssertEqual(EarthlyBranch.xu.meridianOnDuty, .jueyinPericardiumChannelOfHand)
+        XCTAssertEqual(EarthlyBranch.hai.meridianOnDuty, .shaoyangTripleEnergizerChannelOfHand)
+
+        XCTAssertEqual(Meridian.shaoyangGallBladderChannelOfFoot.onDutyHourBranch, .zi)
+        XCTAssertEqual(Meridian.jueyinLiverChannelOfFoot.onDutyHourBranch, .chou)
+        XCTAssertEqual(Meridian.taiyinLungChannelOfHand.onDutyHourBranch, .yin)
+        XCTAssertEqual(Meridian.yangmingLargeIntestineChannelOfHand.onDutyHourBranch, .mao)
+        XCTAssertEqual(Meridian.yangmingStomachChannelOfFoot.onDutyHourBranch, .chen)
+        XCTAssertEqual(Meridian.taiyinSpleenChannelOfFoot.onDutyHourBranch, .si)
+        XCTAssertEqual(Meridian.shaoyinHeartChannelOfHand.onDutyHourBranch, .wu)
+        XCTAssertEqual(Meridian.taiyangSmallIntestineChannelOfHand.onDutyHourBranch, .wei)
+        XCTAssertEqual(Meridian.taiyangUrinaryBladderChannelOfFoot.onDutyHourBranch, .shen)
+        XCTAssertEqual(Meridian.shaoyinKidneyChannelOfFoot.onDutyHourBranch, .you)
+        XCTAssertEqual(Meridian.jueyinPericardiumChannelOfHand.onDutyHourBranch, .xu)
+        XCTAssertEqual(Meridian.shaoyangTripleEnergizerChannelOfHand.onDutyHourBranch, .hai)
+    }
 }
 
 private extension Date {
