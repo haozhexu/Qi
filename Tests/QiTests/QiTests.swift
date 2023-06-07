@@ -275,6 +275,10 @@ final class QiTests: XCTestCase {
         dateSolarTerms.forEach { date, solarTerm in
             XCTAssertEqual(SolarTerm.of(date), solarTerm)
         }
+
+        XCTAssertEqual(SolarTerm.rangeOf(Date(year: 2023, month: 4, day: 5)), .onTheDay(.clearAndBright))
+        XCTAssertEqual(SolarTerm.rangeOf(Date(year: 2023, month: 4, day: 6)), .within(.clearAndBright, .grainRain))
+        XCTAssertEqual(SolarTerm.rangeOf(Date(year: 2100, month: 12, day: 23)), .within(.winterSolstice, .slightCold))
     }
 
     func testLunarCalendar() {
@@ -426,7 +430,7 @@ private extension Date {
 
 private extension LunarCalendar.LunarDate {
     init(month: Int, day: Int) {
-        self = .init(era: 1, year: 1, month: month, day: day, hour: .zi, isLeapMonth: false, solarTerm: nil)
+        self = .init(era: 1, year: 1, month: month, day: day, hour: .zi, isLeapMonth: false, solarTermDayRange: nil)
     }
 }
 

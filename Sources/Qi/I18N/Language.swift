@@ -73,6 +73,59 @@ extension EarthlyBranch: LanguageTextListProviding {
             return ["zǐ", "chǒu", "yín", "mǎo", "chén", "sì", "wǔ", "wèi", "shēn", "yǒu", "xū", "hài"]
         }
     }
+
+    public var twoHourPeriodTime: TwoHourPeriodTime {
+        .init(branch: self)
+    }
+
+    public var pinyin: String {
+        switch self {
+        case .zi:
+            return "zǐ"
+        case .chou:
+            return "chǒu"
+        case .yin:
+            return "yín"
+        case .mao:
+            return "mǎo"
+        case .chen:
+            return "chén"
+        case .si:
+            return "sì"
+        case .wu:
+            return "wǔ"
+        case .wei:
+            return "wèi"
+        case .shen:
+            return "shēn"
+        case .you:
+            return "yǒu"
+        case .xu:
+            return "xū"
+        case .hai:
+            return "hài"
+        }
+    }
+}
+
+public struct TwoHourPeriodTime: LanguageTextListProviding {
+
+    public func iterableCasesText(for language: Language) -> [String] {
+        switch language {
+        case .zhHans:
+            return ["夜半", "鸡鸣", "平旦", "日出", "食时", "隅中", "午时", "日昳", "哺时", "日入", "黄昏", "人定"]
+        case .zhHant:
+            return ["夜半", "雞鳴", "平旦", "日出", "食時", "隅中", "午時", "日昳", "哺時", "日入", "黃昏", "人定"]
+        case .en:
+            return ["Midnight", "Crow of Rooster", "Dawn", "Sunrise", "Breakfast Time", "Morning", "Mid Day", "Sun Moving West", "Feed Time", "Sunset", "Dusk", "Rest Time"]
+        }
+    }
+
+    public static var allCases: [TwoHourPeriodTime] {
+        EarthlyBranch.allCases.map { Self(branch: $0) }
+    }
+
+    let branch: EarthlyBranch
 }
 
 extension StemBranch: LanguageText {

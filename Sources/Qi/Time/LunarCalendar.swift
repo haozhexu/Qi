@@ -59,7 +59,7 @@ public struct LunarCalendar {
         public let day: Int
         public let hour: EarthlyBranch
         public let isLeapMonth: Bool
-        public let solarTerm: SolarTerm?
+        public let solarTermDayRange: SolarTerm.DayRange?
 
         /// 黃帝紀元
         public var yellowEmperorYear: Int {
@@ -93,7 +93,7 @@ public struct LunarCalendar {
             case (9, 9): return .doubleNinthFestival
             case (12, 30) where lastDayOfMonth == 30: return .springFestivalEve
             case (12, 29) where lastDayOfMonth == 29: return .springFestivalEve
-            case (_, _) where solarTerm == .clearAndBright: return .tombSweepingDay
+            case (_, _) where solarTermDayRange == .onTheDay(.clearAndBright): return .tombSweepingDay
             default: return nil
             }
         }
@@ -127,6 +127,6 @@ public struct LunarCalendar {
                          day: day,
                          hour: hourBranch,
                          isLeapMonth: comps.isLeapMonth == true,
-                         solarTerm: SolarTerm.of(date))
+                         solarTermDayRange: SolarTerm.rangeOf(date))
     }
 }
