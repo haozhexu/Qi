@@ -139,6 +139,24 @@ public enum SolarTerm: String, CaseIterable, Equatable {
     public enum DayRange: Equatable {
         case onTheDay(SolarTerm)
         case within(SolarTerm, SolarTerm)
+
+        public var solarTerm: SolarTerm? {
+            switch self {
+            case .onTheDay(let solarTerm):
+                return solarTerm
+            case .within:
+                return nil
+            }
+        }
+
+        public var mostRecent: SolarTerm {
+            switch self {
+            case .onTheDay(let solarTerm):
+                return solarTerm
+            case .within(let solarTerm, _):
+                return solarTerm
+            }
+        }
     }
 
     /// 日期對應節氣

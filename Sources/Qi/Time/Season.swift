@@ -27,7 +27,7 @@ public enum Season: String, CaseIterable, Equatable {
         }
     }
 
-    public func at(_ hemisphere: Hemisphere, with time: Date) -> Season? {
+    public static func at(_ hemisphere: Hemisphere, with time: Date) -> Season? {
         switch hemisphere {
         case .northern:
             return solarTermBased(with: time)
@@ -38,7 +38,7 @@ public enum Season: String, CaseIterable, Equatable {
         }
     }
 
-    public func solarTermBased(with time: Date) -> Season? {
+    public static func solarTermBased(with time: Date) -> Season? {
         let components = Calendar(identifier: .gregorian).dateComponents([.month, .day], from: time)
 
         guard let month = components.month,
@@ -59,7 +59,7 @@ public enum Season: String, CaseIterable, Equatable {
         }
     }
 
-    public func monthBasedAtSouthernHemisphere(with time: Date) -> Season? {
+    public static func monthBasedAtSouthernHemisphere(with time: Date) -> Season? {
         let components = Calendar(identifier: .gregorian).dateComponents([.month], from: time)
         guard let month = components.month else {
             return nil
@@ -73,7 +73,7 @@ public enum Season: String, CaseIterable, Equatable {
         }
     }
 
-    private func isMonth(_ month: Int, day: Int, before monthDay: SolarTerm.MonthAndDay) -> Bool {
+    private static func isMonth(_ month: Int, day: Int, before monthDay: SolarTerm.MonthAndDay) -> Bool {
         if month < monthDay.month {
             return true
         } else if month == monthDay.month {
