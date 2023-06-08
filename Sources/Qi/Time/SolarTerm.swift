@@ -134,6 +134,10 @@ public enum SolarTerm: String, CaseIterable, Equatable {
             }
             return false
         }
+
+        public func toDate(withYear year: Int, calendar: Calendar = .current) -> Date? {
+            DateComponents(calendar: calendar, year: year, month: month, day: day).date
+        }
     }
 
     public enum DayRange: Equatable {
@@ -211,6 +215,10 @@ public enum SolarTerm: String, CaseIterable, Equatable {
             let day = (flag & 0x0F) + 15
             return .init(month: month, day: day)
         }
+    }
+
+    public static func date(of solarTerm: SolarTerm, in year: Int, calendar: Calendar = .current) -> Date? {
+        monthAndDay(of: solarTerm, in: year).toDate(withYear: year, calendar: calendar)
     }
 
     /// 節氣對應格里高里曆粗略日期
