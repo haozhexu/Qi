@@ -69,39 +69,39 @@ final class QiTests: XCTestCase {
     func testElementAdequacyOfYear() {
 
         // 甲年土运太过
-        XCTAssertEqual(Qi.fortuneOfYear(of: .jia), .init(element: .earth, adequacy: .excess))
+        XCTAssertEqual(Qi.yearFortune(of: .jia), .init(element: .earth, adequacy: .excess))
 
         // 乙年金运不及
-        XCTAssertEqual(Qi.fortuneOfYear(of: .yi), .init(element: .metal, adequacy: .deficiency))
+        XCTAssertEqual(Qi.yearFortune(of: .yi), .init(element: .metal, adequacy: .deficiency))
 
         // 丙年水运太过
-        XCTAssertEqual(Qi.fortuneOfYear(of: .bing), .init(element: .water, adequacy: .excess))
+        XCTAssertEqual(Qi.yearFortune(of: .bing), .init(element: .water, adequacy: .excess))
 
         // 丁年木运不及
-        XCTAssertEqual(Qi.fortuneOfYear(of: .ding), .init(element: .tree, adequacy: .deficiency))
+        XCTAssertEqual(Qi.yearFortune(of: .ding), .init(element: .tree, adequacy: .deficiency))
 
         // 戊年火运太过
-        XCTAssertEqual(Qi.fortuneOfYear(of: .wu), .init(element: .fire, adequacy: .excess))
+        XCTAssertEqual(Qi.yearFortune(of: .wu), .init(element: .fire, adequacy: .excess))
 
         // 己年土运不及
-        XCTAssertEqual(Qi.fortuneOfYear(of: .ji), .init(element: .earth, adequacy: .deficiency))
+        XCTAssertEqual(Qi.yearFortune(of: .ji), .init(element: .earth, adequacy: .deficiency))
 
         // 庚年金运太过
-        XCTAssertEqual(Qi.fortuneOfYear(of: .geng), .init(element: .metal, adequacy: .excess))
+        XCTAssertEqual(Qi.yearFortune(of: .geng), .init(element: .metal, adequacy: .excess))
 
         // 辛年水运不及
-        XCTAssertEqual(Qi.fortuneOfYear(of: .xin), .init(element: .water, adequacy: .deficiency))
+        XCTAssertEqual(Qi.yearFortune(of: .xin), .init(element: .water, adequacy: .deficiency))
 
         // 壬年木运太过
-        XCTAssertEqual(Qi.fortuneOfYear(of: .ren), .init(element: .tree, adequacy: .excess))
+        XCTAssertEqual(Qi.yearFortune(of: .ren), .init(element: .tree, adequacy: .excess))
 
         // 癸年火运不及
-        XCTAssertEqual(Qi.fortuneOfYear(of: .gui), .init(element: .fire, adequacy: .deficiency))
+        XCTAssertEqual(Qi.yearFortune(of: .gui), .init(element: .fire, adequacy: .deficiency))
     }
 
     /// 主運
     func testHostFortunesOfYear() {
-        XCTAssertEqual(Qi.hostFortunesOfYear(), [.tree, .fire, .earth, .metal, .water])
+        XCTAssertEqual(Qi.yearlyHostFortunes(), [.tree, .fire, .earth, .metal, .water])
     }
 
     /// 客運
@@ -181,20 +181,31 @@ final class QiTests: XCTestCase {
         let stemBranch = StemBranchCalendar().stemBranchDate(of: Date(year: 2023, month: 5, day: 12, hour: 12))
         let fiveSix = Qi.fortuneAndQi(of: stemBranch)
         XCTAssertEqual(fiveSix.year.yearlyFortune, .init(element: .fire, adequacy: .deficiency))
-        XCTAssertEqual(fiveSix.year.hostFortunes, [.tree, .fire, .earth, .metal, .water])
-        XCTAssertEqual(fiveSix.year.guestFortunes,
-                       [.init(element: .fire, adequacy: .deficiency),
-                        .init(element: .earth, adequacy: .excess),
-                        .init(element: .metal, adequacy: .deficiency),
-                        .init(element: .water, adequacy: .excess),
-                        .init(element: .tree, adequacy: .deficiency)])
-        XCTAssertEqual(fiveSix.year.hostSixQi, [.weakYinWood, .mildYinFire, .weakYangFire, .dominantYinEarth, .mildYangMetal, .dominantYangWater])
-        XCTAssertEqual(fiveSix.year.guestSixQi, [.dominantYinEarth, .weakYangFire, .mildYangMetal, .dominantYangWater, .weakYinWood, .mildYinFire])
+        XCTAssertEqual(fiveSix.year.fiveFortunes, [
+            .init(host: .tree, guest: .init(element: .fire, adequacy: .deficiency), startDate: Date(), endDate: Date()),
+            .init(host: .fire, guest: .init(element: .earth, adequacy: .excess), startDate: Date(), endDate: Date()),
+            .init(host: .earth, guest: .init(element: .metal, adequacy: .deficiency), startDate: Date(), endDate: Date()),
+            .init(host: .metal, guest: .init(element: .water, adequacy: .excess), startDate: Date(), endDate: Date()),
+            .init(host: .water, guest: .init(element: .tree, adequacy: .deficiency), startDate: Date(), endDate: Date())
+        ])
         XCTAssertEqual(fiveSix.year.climaticEffect, .init(celestial: .mildYangMetal, terrestrial: .mildYinFire))
         XCTAssertEqual(fiveSix.now.fortune.host, .fire)
         XCTAssertEqual(fiveSix.now.fortune.guest, .init(element: .earth, adequacy: .excess))
         XCTAssertEqual(fiveSix.now.qi.host, .mildYinFire)
         XCTAssertEqual(fiveSix.now.qi.guest, .weakYangFire)
+
+        XCTAssertEqual(fiveSix.year.sixQi[0].host, .weakYinWood)
+        XCTAssertEqual(fiveSix.year.sixQi[0].guest, .dominantYinEarth)
+        XCTAssertEqual(fiveSix.year.sixQi[1].host, .mildYinFire)
+        XCTAssertEqual(fiveSix.year.sixQi[1].guest, .weakYangFire)
+        XCTAssertEqual(fiveSix.year.sixQi[2].host, .weakYangFire)
+        XCTAssertEqual(fiveSix.year.sixQi[2].guest, .mildYangMetal)
+        XCTAssertEqual(fiveSix.year.sixQi[3].host, .dominantYinEarth)
+        XCTAssertEqual(fiveSix.year.sixQi[3].guest, .dominantYangWater)
+        XCTAssertEqual(fiveSix.year.sixQi[4].host, .mildYangMetal)
+        XCTAssertEqual(fiveSix.year.sixQi[4].guest, .weakYinWood)
+        XCTAssertEqual(fiveSix.year.sixQi[5].host, .dominantYangWater)
+        XCTAssertEqual(fiveSix.year.sixQi[5].guest, .mildYinFire)
     }
 
     func testStemBranch() {
@@ -275,6 +286,10 @@ final class QiTests: XCTestCase {
         dateSolarTerms.forEach { date, solarTerm in
             XCTAssertEqual(SolarTerm.of(date), solarTerm)
         }
+
+        XCTAssertEqual(SolarTerm.rangeOf(Date(year: 2023, month: 4, day: 5)), .onTheDay(.clearAndBright))
+        XCTAssertEqual(SolarTerm.rangeOf(Date(year: 2023, month: 4, day: 6)), .within(.clearAndBright, .grainRain))
+        XCTAssertEqual(SolarTerm.rangeOf(Date(year: 2100, month: 12, day: 23)), .within(.winterSolstice, .slightCold))
     }
 
     func testLunarCalendar() {
@@ -377,6 +392,34 @@ final class QiTests: XCTestCase {
         // 十二月小
         XCTAssertEqual(Date(year: 2022, month: 1, day: 31).lunarDate().holiday, .springFestivalEve)
     }
+
+    func testMeridianCycle() {
+        XCTAssertEqual(EarthlyBranch.zi.meridianOnDuty, .gallbladderOfFootShaoyang)
+        XCTAssertEqual(EarthlyBranch.chou.meridianOnDuty, .liverOfFootJueyin)
+        XCTAssertEqual(EarthlyBranch.yin.meridianOnDuty, .lungOfHandTaiyin)
+        XCTAssertEqual(EarthlyBranch.mao.meridianOnDuty, .largeIntestineOfHandYangming)
+        XCTAssertEqual(EarthlyBranch.chen.meridianOnDuty, .stomachOfFootYangming)
+        XCTAssertEqual(EarthlyBranch.si.meridianOnDuty, .spleenOfFootTaiyin)
+        XCTAssertEqual(EarthlyBranch.wu.meridianOnDuty, .heartOfHandShaoyin)
+        XCTAssertEqual(EarthlyBranch.wei.meridianOnDuty, .smallInstestineHandTaiyang)
+        XCTAssertEqual(EarthlyBranch.shen.meridianOnDuty, .bladderOfFootTaiyang)
+        XCTAssertEqual(EarthlyBranch.you.meridianOnDuty, .kidneyOfFootShaoyin)
+        XCTAssertEqual(EarthlyBranch.xu.meridianOnDuty, .pericardiumOfHandJueyin)
+        XCTAssertEqual(EarthlyBranch.hai.meridianOnDuty, .tripleEnergizerOfHandShaoyang)
+
+        XCTAssertEqual(Meridian.gallbladderOfFootShaoyang.onDutyHourBranch, .zi)
+        XCTAssertEqual(Meridian.liverOfFootJueyin.onDutyHourBranch, .chou)
+        XCTAssertEqual(Meridian.lungOfHandTaiyin.onDutyHourBranch, .yin)
+        XCTAssertEqual(Meridian.largeIntestineOfHandYangming.onDutyHourBranch, .mao)
+        XCTAssertEqual(Meridian.stomachOfFootYangming.onDutyHourBranch, .chen)
+        XCTAssertEqual(Meridian.spleenOfFootTaiyin.onDutyHourBranch, .si)
+        XCTAssertEqual(Meridian.heartOfHandShaoyin.onDutyHourBranch, .wu)
+        XCTAssertEqual(Meridian.smallInstestineHandTaiyang.onDutyHourBranch, .wei)
+        XCTAssertEqual(Meridian.bladderOfFootTaiyang.onDutyHourBranch, .shen)
+        XCTAssertEqual(Meridian.kidneyOfFootShaoyin.onDutyHourBranch, .you)
+        XCTAssertEqual(Meridian.pericardiumOfHandJueyin.onDutyHourBranch, .xu)
+        XCTAssertEqual(Meridian.tripleEnergizerOfHandShaoyang.onDutyHourBranch, .hai)
+    }
 }
 
 private extension Date {
@@ -398,12 +441,18 @@ private extension Date {
 
 private extension LunarCalendar.LunarDate {
     init(month: Int, day: Int) {
-        self = .init(era: 1, year: 1, month: month, day: day, hour: .zi, isLeapMonth: false, solarTerm: nil)
+        self = .init(era: 1, year: 1, month: month, day: day, hour: .zi, isLeapMonth: false, solarTermDayRange: nil)
     }
 }
 
 private extension Date {
     func lunarDate() -> LunarCalendar.LunarDate {
         LunarCalendar().lunarDate(from: self)
+    }
+}
+
+extension Qi.HostGuestWithDate<Element, Qi.ElementAndAdequacy>: Equatable {
+    public static func == (lhs: Qi.HostGuestWithDate<Element, Qi.ElementAndAdequacy>, rhs: Qi.HostGuestWithDate<Element, Qi.ElementAndAdequacy>) -> Bool {
+        lhs.host == rhs.host && lhs.guest == rhs.guest
     }
 }

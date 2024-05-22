@@ -274,19 +274,19 @@ public struct StemBranchCalendar {
     private func solarTermBasedStemBranchOfMonth(of date: Date, yearStem: HeavenlyStem) -> StemBranch {
         let stem: HeavenlyStem
         let branch = date.returnBeforeFirst([
-            (.springBegins, nil, 0, EarthlyBranch.chou),
-            (.insectsAwaken, nil, 0, EarthlyBranch.yin),
-            (.clearAndBright, nil, 0, EarthlyBranch.mao),
-            (.summerBegins, nil, 0, EarthlyBranch.chen),
-            (.grainInEar, nil, 0, EarthlyBranch.si),
-            (.slightHeat, nil, 0, EarthlyBranch.wu),
-            (.autumnBegins, nil, 0, EarthlyBranch.wei),
-            (.whiteDews, nil, 0, EarthlyBranch.shen),
-            (.coldDews, nil, 0, EarthlyBranch.you),
-            (.winterBegins, nil, 0, EarthlyBranch.xu),
-            (.heavySnow, nil, 0, EarthlyBranch.hai),
-            (.slightCold, nil, 0, EarthlyBranch.zi)
-        ], defaultValue: .chou)
+            (.springBegins, nil, 0, { EarthlyBranch.chou }),
+            (.insectsAwaken, nil, 0, { EarthlyBranch.yin }),
+            (.clearAndBright, nil, 0, { EarthlyBranch.mao }),
+            (.summerBegins, nil, 0, { EarthlyBranch.chen }),
+            (.grainInEar, nil, 0, { EarthlyBranch.si }),
+            (.slightHeat, nil, 0, { EarthlyBranch.wu }),
+            (.autumnBegins, nil, 0, { EarthlyBranch.wei }),
+            (.whiteDews, nil, 0, { EarthlyBranch.shen }),
+            (.coldDews, nil, 0, { EarthlyBranch.you }),
+            (.winterBegins, nil, 0, { EarthlyBranch.xu }),
+            (.heavySnow, nil, 0, { EarthlyBranch.hai }),
+            (.slightCold, nil, 0, { EarthlyBranch.zi })
+        ], defaultValue: { .chou })
         let monthStems = monthStemsForYear(yearStem)
         let stemIndex = ((branch.rawValue - 2) % 12)
         stem = monthStems[stemIndex]

@@ -13,18 +13,28 @@ public enum Language: String, Equatable {
     case en = "en"
 }
 
-public protocol LanguageText {
+public protocol LocalizedTextProvider {
     func text(of language: Language) -> String
 }
 
-public extension LanguageText {
+public extension LocalizedTextProvider {
     var CNs: String { text(of: .zhHans) }
     var CNt: String { text(of: .zhHant) }
     var EN: String { text(of: .en) }
 }
 
-extension YinYang: LanguageTextListProviding {
-    public func iterableCasesText(for language: Language) -> [String] {
+public struct LocalizedText: LocalizedTextProvider {
+    let localizedText: [Language: String]
+    public func text(of language: Language) -> String {
+        guard let text = localizedText[language] else {
+            preconditionFailure("Missing text for language: \(language)")
+        }
+        return text
+    }
+}
+
+extension YinYang: IterableLocalizedTextProvider {
+    public func textForIterables(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["阴", "阳"]
@@ -36,8 +46,8 @@ extension YinYang: LanguageTextListProviding {
     }
 }
 
-extension Element: LanguageTextListProviding {
-    public func iterableCasesText(for language: Language) -> [String] {
+extension Element: IterableLocalizedTextProvider {
+    public func textForIterables(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["木", "火", "土", "金", "水"]
@@ -49,8 +59,8 @@ extension Element: LanguageTextListProviding {
     }
 }
 
-extension HeavenlyStem: LanguageTextListProviding {
-    public func iterableCasesText(for language: Language) -> [String] {
+extension HeavenlyStem: IterableLocalizedTextProvider {
+    public func textForIterables(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"]
@@ -62,8 +72,8 @@ extension HeavenlyStem: LanguageTextListProviding {
     }
 }
 
-extension EarthlyBranch: LanguageTextListProviding {
-    public func iterableCasesText(for language: Language) -> [String] {
+extension EarthlyBranch: IterableLocalizedTextProvider {
+    public func textForIterables(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
@@ -73,49 +83,102 @@ extension EarthlyBranch: LanguageTextListProviding {
             return ["zǐ", "chǒu", "yín", "mǎo", "chén", "sì", "wǔ", "wèi", "shēn", "yǒu", "xū", "hài"]
         }
     }
+
+    public var twoHourPeriodTime: TwoHourPeriodTime {
+        .init(branch: self)
+    }
+
+    public var pinyin: String {
+        switch self {
+        case .zi:
+            return "zǐ"
+        case .chou:
+            return "chǒu"
+        case .yin:
+            return "yín"
+        case .mao:
+            return "mǎo"
+        case .chen:
+            return "chén"
+        case .si:
+            return "sì"
+        case .wu:
+            return "wǔ"
+        case .wei:
+            return "wèi"
+        case .shen:
+            return "shēn"
+        case .you:
+            return "yǒu"
+        case .xu:
+            return "xū"
+        case .hai:
+            return "hài"
+        }
+    }
 }
 
-extension StemBranch: LanguageText {
+public struct TwoHourPeriodTime: IterableLocalizedTextProvider {
+
+    public func textForIterables(for language: Language) -> [String] {
+        switch language {
+        case .zhHans:
+            return ["夜半", "鸡鸣", "平旦", "日出", "食时", "隅中", "午时", "日昳", "哺时", "日入", "黄昏", "人定"]
+        case .zhHant:
+            return ["夜半", "雞鳴", "平旦", "日出", "食時", "隅中", "午時", "日昳", "哺時", "日入", "黃昏", "人定"]
+        case .en:
+            return ["Midnight", "Crow of Rooster", "Dawn", "Sunrise", "Breakfast Time", "Morning", "Mid Day", "Sun Moving West", "Feed Time", "Sunset", "Dusk", "Rest Time"]
+        }
+    }
+
+    public static var allCases: [TwoHourPeriodTime] {
+        EarthlyBranch.allCases.map { Self(branch: $0) }
+    }
+
+    let branch: EarthlyBranch
+}
+
+extension StemBranch: LocalizedTextProvider {
     public func text(of language: Language) -> String {
         "\(stem.text(of: language))\(branch.text(of: language))"
     }
 }
 
-extension PhasedYinYang: LanguageText {
+extension ThreeOf<YinYang>: LocalizedTextProvider {
     public func text(of language: Language) -> String {
         let text: [Language: String]
-        switch (phase, yinyang) {
-        case (.weak, .yin):
-            text = [.en: "Weak Yin",
-                    .zhHans: "厥阴",
-                    .zhHant: "厥陰"]
-        case (.mild, .yin):
-            text = [.en: "Mild Yin",
-                    .zhHans: "少阴",
-                    .zhHant: "少陰"]
-        case (.dominant, .yin):
-            text = [.en: "Dominant Yin",
-                    .zhHans: "太阴",
-                    .zhHant: "太陰"]
-        case (.weak, .yang):
+        switch self {
+        case .one(.nothing):
             text = [.en: "Weak Yang",
                     .zhHans: "少阳",
                     .zhHant: "少陽"]
-        case (.mild, .yang):
+        case .two(.nothing):
             text = [.en: "Mild Yang",
                     .zhHans: "阳明",
                     .zhHant: "陽明"]
-        case (.dominant, .yang):
+        case .three(.nothing):
             text = [.en: "Dominant Yang",
                     .zhHans: "太阳",
                     .zhHant: "太陽"]
+        case .one(.something):
+            text = [.en: "Weak Yin",
+                    .zhHans: "厥阴",
+                    .zhHant: "厥陰"]
+        case .two(.something):
+            text = [.en: "Mild Yin",
+                    .zhHans: "少阴",
+                    .zhHant: "少陰"]
+        case .three(.something):
+            text = [.en: "Dominant Yin",
+                    .zhHans: "太阴",
+                    .zhHant: "太陰"]
         }
         return text[language] ?? "???"
     }
 }
 
-extension Qi: LanguageTextListProviding {
-    public func iterableCasesText(for language: Language) -> [String] {
+extension Qi: IterableLocalizedTextProvider {
+    public func textForIterables(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["厥阴风木", "少阴君火", "太阴湿土", "少阳相火", "阳明燥金", "太阳寒水"]
@@ -132,8 +195,8 @@ extension Qi: LanguageTextListProviding {
     }
 }
 
-extension Qi.Factor: LanguageTextListProviding {
-    public func iterableCasesText(for language: Language) -> [String] {
+extension Qi.Factor: IterableLocalizedTextProvider {
+    public func textForIterables(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["风", "热", "火", "湿", "燥", "寒"]
@@ -145,15 +208,15 @@ extension Qi.Factor: LanguageTextListProviding {
     }
 }
 
-extension Qi.Compound: LanguageText {
+extension Qi.Compound: LocalizedTextProvider {
     public func text(of language: Language) -> String {
         let factorText: [Language: String]
         switch factor {
-        case .heat where phasedYinYang.yinyang == .yin:
+        case .heat where threeYinYang.yinyang == .yin:
             factorText = [.en: "Monarch",
                           .zhHans: "君",
                           .zhHant: "君"]
-        case .fire where phasedYinYang.yinyang == .yang:
+        case .fire where threeYinYang.yinyang == .yang:
             factorText = [.en: "Ministerial",
                           .zhHans: "相",
                           .zhHant: "相"]
@@ -162,12 +225,12 @@ extension Qi.Compound: LanguageText {
                           .zhHans: factor.text(of: .zhHans),
                           .zhHant: factor.text(of: .zhHant)]
         }
-        return "\(phasedYinYang.text(of: language))\(factorText[language] ?? "?")\(element.text(of: language))"
+        return "\(threeYinYang.text(of: language))\(factorText[language] ?? "?")\(element.text(of: language))"
     }
 }
 
-extension Qi.Adequacy: LanguageTextListProviding {
-    public func iterableCasesText(for language: Language) -> [String] {
+extension Qi.Adequacy: IterableLocalizedTextProvider {
+    public func textForIterables(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["太过", "不及"]
@@ -179,28 +242,28 @@ extension Qi.Adequacy: LanguageTextListProviding {
     }
 }
 
-extension Qi.ElementAndAdequacy: LanguageText {
+extension Qi.ElementAndAdequacy: LocalizedTextProvider {
     public func text(of language: Language) -> String {
         "\(element.text(of: language))\(adequacy.text(of: language))"
     }
 }
 
-public protocol LanguageTextListProviding: LanguageText, CaseIterable, Equatable {
-    func iterableCasesText(for language: Language) -> [String]
+public protocol IterableLocalizedTextProvider: LocalizedTextProvider, CaseIterable, Equatable {
+    func textForIterables(for language: Language) -> [String]
 }
 
-extension LanguageTextListProviding {
+extension IterableLocalizedTextProvider {
     public func text(of language: Language) -> String {
         guard let index = Self.allCases.firstIndex(of: self) as? Int else {
             preconditionFailure("\(self) isn't part of \(Self.self)!")
         }
-        let text = iterableCasesText(for: language)
+        let text = textForIterables(for: language)
         return text[index]
     }
 }
 
-extension ZodiacAnimal: LanguageTextListProviding {
-    public func iterableCasesText(for language: Language) -> [String] {
+extension ZodiacAnimal: IterableLocalizedTextProvider {
+    public func textForIterables(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"]
@@ -212,7 +275,7 @@ extension ZodiacAnimal: LanguageTextListProviding {
     }
 }
 
-public enum LunarDateTextHolder: LanguageText {
+public enum LunarDateTextHolder: LocalizedTextProvider {
     case day(Int)
     case month(Int, Bool)
 
@@ -259,8 +322,8 @@ public extension LunarCalendar.LunarDate {
     }
 }
 
-extension SolarTerm: LanguageTextListProviding {
-    public func iterableCasesText(for language: Language) -> [String] {
+extension SolarTerm: IterableLocalizedTextProvider {
+    public func textForIterables(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至", "小寒", "大寒"]
@@ -295,8 +358,8 @@ extension SolarTerm: LanguageTextListProviding {
     }
 }
 
-extension LunarCalendar.Holiday: LanguageTextListProviding {
-    public func iterableCasesText(for language: Language) -> [String] {
+extension LunarCalendar.Holiday: IterableLocalizedTextProvider {
+    public func textForIterables(for language: Language) -> [String] {
         switch language {
         case .zhHans:
             return ["春节", "元宵节", "龙抬头", "上巳节", "清明节", "端午节", "七夕节", "中元节", "中秋节", "重阳节", "除夕"]
@@ -304,6 +367,16 @@ extension LunarCalendar.Holiday: LanguageTextListProviding {
             return ["春節", "元宵節", "龍抬頭", "上巳節", "清明節", "端午節", "七夕節", "中元節", "中秋節", "重陽節", "除夕"]
         case .en:
             return ["Spring Festival", "Lantern Festival", "Dragon Head-Raising Festival", "Double Third Festival", "Tomb Sweeping Festival", "Dragon Boat Festival", "Qixi", "Hungry Ghost Festival", "Mid-Autumn Festival", "Double Ninth Festival", "Spring Festival Eve"]
+        }
+    }
+}
+
+extension ThreeOf<YinYang> {
+    var yinyang: YinYang {
+        switch self {
+        case let .one(yy): return yy
+        case let .two(yy): return yy
+        case let .three(yy): return yy
         }
     }
 }
@@ -336,7 +409,7 @@ extension StemBranch: CustomDebugStringConvertible {
     }
 }
 
-extension PhasedYinYang: CustomDebugStringConvertible {
+extension ThreeOf<YinYang>: CustomDebugStringConvertible {
     public var debugDescription: String {
         text(of: debugStringLanguage)
     }
