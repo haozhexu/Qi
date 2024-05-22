@@ -106,6 +106,22 @@ public enum SolarTerm: String, CaseIterable, Equatable {
     /// the coldest moment in a year
     case greatCold
 
+    public func next() -> SolarTerm {
+        guard let index = SolarTerm.allCases.firstIndex(of: self) else {
+            preconditionFailure("Cannot find index of \(self)")
+        }
+        let nextIndex = (index + 1) % SolarTerm.allCases.count
+        return SolarTerm.allCases[nextIndex]
+    }
+
+    public func previous() -> SolarTerm {
+        guard let index = SolarTerm.allCases.firstIndex(of: self) else {
+            preconditionFailure("Cannot find index of \(self)")
+        }
+        let nextIndex = (index - 1) >= 0 ? index - 1 : SolarTerm.allCases.count - 1
+        return SolarTerm.allCases[nextIndex]
+    }
+
     public struct MonthAndDay: Equatable, Comparable {
         public let month: Int
         public let day: Int
@@ -117,6 +133,33 @@ public enum SolarTerm: String, CaseIterable, Equatable {
                 return lhs.day < rhs.day
             }
             return false
+        }
+
+        public func toDate(withYear year: Int, calendar: Calendar = .current) -> Date? {
+            DateComponents(calendar: calendar, year: year, month: month, day: day).date
+        }
+    }
+
+    public enum DayRange: Equatable {
+        case onTheDay(SolarTerm)
+        case within(SolarTerm, SolarTerm)
+
+        public var solarTerm: SolarTerm? {
+            switch self {
+            case .onTheDay(let solarTerm):
+                return solarTerm
+            case .within:
+                return nil
+            }
+        }
+
+        public var mostRecent: SolarTerm {
+            switch self {
+            case .onTheDay(let solarTerm):
+                return solarTerm
+            case .within(let solarTerm, _):
+                return solarTerm
+            }
         }
     }
 
@@ -130,6 +173,26 @@ public enum SolarTerm: String, CaseIterable, Equatable {
             .solarTermsInTheMonth
             .first { $0.day == info.day }?
             .solarTerm
+    }
+
+    /// 日期對應節氣或區間
+    public static func rangeOf(_ date: Date) -> DayRange? {
+        guard let info = dateInfo(for: date) else {
+            return nil
+        }
+        switch (info.solarTermsInTheMonth[0], info.solarTermsInTheMonth[1]) {
+        case let (day1, _) where day1.day == info.day:
+            return .onTheDay(day1.solarTerm)
+        case let (_, day2) where day2.day == info.day:
+            return .onTheDay(day2.solarTerm)
+        case let (day1, day2) where day1.day < info.day && info.day < day2.day:
+            return .within(day1.solarTerm, day2.solarTerm)
+        case let (day1, _) where info.day < day1.day:
+            return .within(day1.solarTerm.previous(), day1.solarTerm)
+        case let (_, day2) where info.day > day2.day:
+            return .within(day2.solarTerm, day2.solarTerm.next())
+        default: return nil
+        }
     }
 
     /// 指定節氣在指定年的月日
@@ -154,15 +217,11 @@ public enum SolarTerm: String, CaseIterable, Equatable {
         }
     }
 
-    private struct DateInfo {
-        let date: Date
-        let year: Int
-        let month: Int
-        let day: Int
-        let lookupIndex: Int
-        let solarTermsInTheMonth: [(solarTerm: SolarTerm, day: Int)]
+    public static func date(of solarTerm: SolarTerm, in year: Int, calendar: Calendar = .current) -> Date? {
+        monthAndDay(of: solarTerm, in: year).toDate(withYear: year, calendar: calendar)
     }
 
+    /// 節氣對應格里高里曆粗略日期
     public var roughMonthAndDay: MonthAndDay {
         switch self {
         case .springBegins:
@@ -214,6 +273,15 @@ public enum SolarTerm: String, CaseIterable, Equatable {
         case .greatCold:
             return .init(month: 1, day: 21)
         }
+    }
+
+    private struct DateInfo {
+        let date: Date
+        let year: Int
+        let month: Int
+        let day: Int
+        let lookupIndex: Int
+        let solarTermsInTheMonth: [(solarTerm: SolarTerm, day: Int)]
     }
 
     private static func dateInfo(for date: Date) -> DateInfo? {
