@@ -94,13 +94,13 @@ public enum Qi: Equatable, CaseIterable {
     /// 六氣
     /// 每一氣包含陰陽、程度（`ThreePhase`），氣後特徵（`Factor`）以及節氣跨度（`Division`）
     public struct Compound: Equatable {
-        public let phasedYinYang: PhasedYinYang
+        public let threeYinYang: ThreeOf<YinYang>
         public let factor: Factor
         public let element: Element
         public let division: Division
 
-        public init(phase: ThreePhase, yinyang: YinYang, factor: Factor, element: Element, division: Division) {
-            self.phasedYinYang = .init(phase: phase, yinyang: yinyang)
+        public init(threeYinYang: ThreeOf<YinYang>, factor: Factor, element: Element, division: Division) {
+            self.threeYinYang = threeYinYang
             self.factor = factor
             self.element = element
             self.division = division
@@ -496,44 +496,45 @@ public enum Qi: Equatable, CaseIterable {
         let date = stemBranch.date
         let guestQi = guestQiOfYear(of: stemBranch.year.branch)
         let gregorian = Calendar(identifier: .gregorian)
-        if date.isBefore(solarTerm: .greatCold, offset: 0) {
+        // 大寒之前，終之氣
+        if date.isBefore(solarTerm: .greatCold, offset: 0.5) {
             return .init(host: .dominantYangWater,
                          guest: guestQi[5],
                          startDate: SolarTerm.date(of: .lightSnow, in: year, calendar: gregorian)!,
                          endDate: SolarTerm.date(of: .greatCold, in: year + 1, calendar: gregorian)!)
-        } else if date.isAfter(solarTerm: .greatCold, offset: 0),
-                  date.isBefore(solarTerm: .vernalEquinox, offset: 0) {
+        } else if date.isAfter(solarTerm: .greatCold, offset: -0.5),
+                  date.isBefore(solarTerm: .vernalEquinox, offset: 0.5) {
             return .init(host: .weakYinWood,
                          guest: guestQi[0],
                          startDate: SolarTerm.date(of: .greatCold, in: year, calendar: gregorian)!,
                          endDate: SolarTerm.date(of: .vernalEquinox, in: year, calendar: gregorian)!)
-        } else if date.isAfter(solarTerm: .vernalEquinox, offset: 0),
-                  date.isBefore(solarTerm: .grainBuds, offset: 0) {
+        } else if date.isAfter(solarTerm: .vernalEquinox, offset: -0.5),
+                  date.isBefore(solarTerm: .grainBuds, offset: 0.5) {
             return .init(host: .mildYinFire,
                          guest: guestQi[1],
                          startDate: SolarTerm.date(of: .vernalEquinox, in: year, calendar: gregorian)!,
                          endDate: SolarTerm.date(of: .grainBuds, in: year, calendar: gregorian)!)
-        } else if date.isAfter(solarTerm: .grainBuds, offset: 0),
-                  date.isBefore(solarTerm: .greatHeat, offset: 0) {
+        } else if date.isAfter(solarTerm: .grainBuds, offset: -0.5),
+                  date.isBefore(solarTerm: .greatHeat, offset: 0.5) {
             return .init(host: .weakYangFire,
                          guest: guestQi[2],
                          startDate: SolarTerm.date(of: .grainBuds, in: year, calendar: gregorian)!,
                          endDate: SolarTerm.date(of: .greatHeat, in: year, calendar: gregorian)!)
         } else if
-            date.isAfter(solarTerm: .greatHeat, offset: 0),
-            date.isBefore(solarTerm: .autumnEquinox, offset: 0) {
+            date.isAfter(solarTerm: .greatHeat, offset: -0.5),
+            date.isBefore(solarTerm: .autumnEquinox, offset: 0.5) {
             return .init(host: .dominantYinEarth,
                          guest: guestQi[3],
                          startDate: SolarTerm.date(of: .greatHeat, in: year, calendar: gregorian)!,
                          endDate: SolarTerm.date(of: .autumnEquinox, in: year, calendar: gregorian)!)
         } else if
-            date.isAfter(solarTerm: .autumnEquinox, offset: 0),
-            date.isBefore(solarTerm: .lightSnow, offset: 0) {
+            date.isAfter(solarTerm: .autumnEquinox, offset: -0.5),
+            date.isBefore(solarTerm: .lightSnow, offset: 0.5) {
             return .init(host: .mildYangMetal,
                          guest: guestQi[4],
                          startDate: SolarTerm.date(of: .autumnEquinox, in: year, calendar: gregorian)!,
                          endDate: SolarTerm.date(of: .lightSnow, in: year, calendar: gregorian)!)
-        } else if date.isAfter(solarTerm: .lightSnow, offset: 0) {
+        } else if date.isAfter(solarTerm: .lightSnow, offset: -0.5) {
             return .init(host: .dominantYangWater,
                          guest: guestQi[5],
                          startDate: SolarTerm.date(of: .lightSnow, in: year, calendar: gregorian)!,
@@ -597,17 +598,17 @@ public extension Qi {
     func compound() -> Compound {
         switch self {
         case .weakYinWood:
-            return .init(phase: .weak, yinyang: .yin, factor: .wind, element: .tree, division: .init(start: .greatCold, end: .vernalEquinox))
+            return .init(threeYinYang: .one(.yin), factor: .wind, element: .tree, division: .init(start: .greatCold, end: .vernalEquinox))
         case .mildYinFire:
-            return .init(phase: .mild, yinyang: .yin, factor: .heat, element: .fire, division: .init(start: .vernalEquinox, end: .grainBuds))
+            return .init(threeYinYang: .two(.yin), factor: .heat, element: .fire, division: .init(start: .vernalEquinox, end: .grainBuds))
         case .dominantYinEarth:
-            return .init(phase: .dominant, yinyang: .yin, factor: .damp, element: .earth, division: .init(start: .greatHeat, end: .autumnEquinox))
+            return .init(threeYinYang: .three(.yin), factor: .damp, element: .earth, division: .init(start: .greatHeat, end: .autumnEquinox))
         case .weakYangFire:
-            return .init(phase: .weak, yinyang: .yang, factor: .fire, element: .fire, division: .init(start: .grainBuds, end: .greatHeat))
+            return .init(threeYinYang: .one(.yang), factor: .fire, element: .fire, division: .init(start: .grainBuds, end: .greatHeat))
         case .mildYangMetal:
-            return .init(phase: .mild, yinyang: .yang, factor: .dryness, element: .metal, division: .init(start: .autumnEquinox, end: .lightSnow))
+            return .init(threeYinYang: .two(.yang), factor: .dryness, element: .metal, division: .init(start: .autumnEquinox, end: .lightSnow))
         case .dominantYangWater:
-            return .init(phase: .dominant, yinyang: .yang, factor: .cold, element: .water, division: .init(start: .lightSnow, end: .greatCold))
+            return .init(threeYinYang: .three(.yang), factor: .cold, element: .water, division: .init(start: .lightSnow, end: .greatCold))
         }
     }
 
@@ -643,24 +644,26 @@ extension Date {
         Calendar(identifier: .gregorian).dateComponents([.year], from: self).year
     }
 
-    func isBefore(solarTerm: SolarTerm, hourBranch: EarthlyBranch? = nil, offset days: Int) -> Bool {
+    func isBefore(solarTerm: SolarTerm, hourBranch: EarthlyBranch? = nil, offset days: Double) -> Bool {
         let range = dateRangeOf(solarTerm: solarTerm, hourBranch: hourBranch, offsetInDays: days)
+        print("\(self) is before \(range.lowerBound)...\(range.upperBound)")
         return self < range.lowerBound
     }
 
-    func isAfter(solarTerm: SolarTerm, hourBranch: EarthlyBranch? = nil, offset days: Int) -> Bool {
+    func isAfter(solarTerm: SolarTerm, hourBranch: EarthlyBranch? = nil, offset days: Double) -> Bool {
         let range = dateRangeOf(solarTerm: solarTerm, hourBranch: hourBranch, offsetInDays: days)
+        print("\(self) is after \(range.lowerBound)...\(range.upperBound)")
         return self >= range.upperBound
     }
 
-    func returnBeforeFirst<T>(_ solarTerms: [(solarTerm: SolarTerm, hourBranch: EarthlyBranch?, offset: Int, value: () -> T)], defaultValue: () -> T) -> T {
+    func returnBeforeFirst<T>(_ solarTerms: [(solarTerm: SolarTerm, hourBranch: EarthlyBranch?, offset: Double, value: () -> T)], defaultValue: () -> T) -> T {
         guard let first = returnBeforeFirst(solarTerms) else {
             return defaultValue()
         }
         return first
     }
 
-    func returnBeforeFirst<T>(_ solarTerms: [(solarTerm: SolarTerm, hourBranch: EarthlyBranch?, offset: Int, value: () -> T)]) -> T? {
+    func returnBeforeFirst<T>(_ solarTerms: [(solarTerm: SolarTerm, hourBranch: EarthlyBranch?, offset: Double, value: () -> T)]) -> T? {
         if let solarTerm = solarTerms.first(where: { isBefore(solarTerm: $0.solarTerm, hourBranch: $0.hourBranch, offset: $0.offset) }) {
             return solarTerm.value()
         }
@@ -682,7 +685,7 @@ extension Date {
         return date1..<date2
     }
 
-    func dateRangeOf(solarTerm: SolarTerm, hourBranch: EarthlyBranch? = nil, offsetInDays days: Int) -> ClosedRange<Date> {
+    func dateRangeOf(solarTerm: SolarTerm, hourBranch: EarthlyBranch? = nil, offsetInDays days: Double) -> ClosedRange<Date> {
         guard let year = Calendar(identifier: .gregorian)
             .dateComponents([.year], from: self)
             .year else {
