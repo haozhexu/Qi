@@ -9,11 +9,11 @@ import Foundation
 
 /// 經絡
 public struct Meridian: Equatable {
-    let name: LocalizedTextProvider
-    let code: String
-    let acupoints: [Acupoint]
+    public let name: LocalizedTextProvider
+    public let code: String
+    public let acupoints: [Acupoint]
 
-    static let lungOfHandTaiyin = Meridian(
+    public static let lungOfHandTaiyin = Meridian(
         name: LocalizedText(
             localizedText: [
                 .en: "Lung Meridian of Hand-Taiyin",
@@ -37,7 +37,7 @@ public struct Meridian: Equatable {
         ]
     )
 
-    static let largeIntestineOfHandYangming = Meridian(
+    public static let largeIntestineOfHandYangming = Meridian(
         name: LocalizedText(
             localizedText: [
                 .en: "Large Intestine Meridian of Hand-Yangming",
@@ -70,7 +70,7 @@ public struct Meridian: Equatable {
         ]
     )
     
-    static let stomachOfFootYangming = Meridian(
+    public static let stomachOfFootYangming = Meridian(
         name: LocalizedText(
             localizedText: [
                 .en: "Stomach Meridian of Foot-Yangming",
@@ -128,7 +128,7 @@ public struct Meridian: Equatable {
         ]
     )
     
-    static let spleenOfFootTaiyin = Meridian(
+    public static let spleenOfFootTaiyin = Meridian(
         name: LocalizedText(
             localizedText: [
                 .en: "Spleen Meridian of Foot-Taiyin",
@@ -162,7 +162,7 @@ public struct Meridian: Equatable {
         ]
     )
     
-    static let heartOfHandShaoyin = Meridian(
+    public static let heartOfHandShaoyin = Meridian(
         name: LocalizedText(
             localizedText: [
                 .en: "Heart Meridian of Hand-Shaoyin",
@@ -184,7 +184,7 @@ public struct Meridian: Equatable {
         ]
     )
 
-    static let smallInstestineHandTaiyang = Meridian(
+    public static let smallInstestineHandTaiyang = Meridian(
         name: LocalizedText(
             localizedText: [
                 .en: "Small Instestine Meridian of Hand-Taiyang",
@@ -216,7 +216,7 @@ public struct Meridian: Equatable {
         ]
     )
     
-    static let bladderOfFootTaiyang = Meridian(
+    public static let bladderOfFootTaiyang = Meridian(
         name: LocalizedText(
             localizedText: [
                 .en: "Bladder Meridian of Foot-Taiyang",
@@ -296,7 +296,7 @@ public struct Meridian: Equatable {
         ]
     )
     
-    static let kidneyOfFootShaoyin = Meridian(
+    public static let kidneyOfFootShaoyin = Meridian(
         name: LocalizedText(
             localizedText: [
                 .en: "Kidney Meridian of Foot-Shaoyin",
@@ -336,7 +336,7 @@ public struct Meridian: Equatable {
         ]
     )
     
-    static let pericardiumOfHandJueyin = Meridian(
+    public static let pericardiumOfHandJueyin = Meridian(
         name: LocalizedText(
             localizedText: [
                 .en: "Pericardium Meridian of Hand-Jueyin",
@@ -358,7 +358,7 @@ public struct Meridian: Equatable {
         ]
     )
     
-    static let tripleEnergizerOfHandShaoyang = Meridian(
+    public static let tripleEnergizerOfHandShaoyang = Meridian(
         name: LocalizedText(
             localizedText: [
                 .en: "Triple Energizer Meridian of Hand-Shaoyang",
@@ -393,7 +393,7 @@ public struct Meridian: Equatable {
         ]
     )
     
-    static let gallbladderOfFootShaoyang = Meridian(
+    public static let gallbladderOfFootShaoyang = Meridian(
         name: LocalizedText(
             localizedText: [
                 .en: "Gallbladder Meridian of Foot-Shaoyang",
@@ -450,7 +450,7 @@ public struct Meridian: Equatable {
         ]
     )
     
-    static let liverOfFootJueyin = Meridian(
+    public static let liverOfFootJueyin = Meridian(
         name: LocalizedText(
             localizedText: [
                 .en: "Liver Meridian of Foot-Jueyin",
