@@ -13,6 +13,7 @@ public struct Meridian: Equatable {
     public let code: String
     public let acupoints: [Acupoint]
 
+    /// 手太陰肺經
     public static let lungOfHandTaiyin = Meridian(
         name: LocalizedText(
             localizedText: [
@@ -37,6 +38,7 @@ public struct Meridian: Equatable {
         ]
     )
 
+    /// 手陽明大腸經
     public static let largeIntestineOfHandYangming = Meridian(
         name: LocalizedText(
             localizedText: [
@@ -70,6 +72,7 @@ public struct Meridian: Equatable {
         ]
     )
     
+    /// 足陽明胃經
     public static let stomachOfFootYangming = Meridian(
         name: LocalizedText(
             localizedText: [
@@ -128,6 +131,7 @@ public struct Meridian: Equatable {
         ]
     )
     
+    /// 足太陰脾經
     public static let spleenOfFootTaiyin = Meridian(
         name: LocalizedText(
             localizedText: [
@@ -162,6 +166,7 @@ public struct Meridian: Equatable {
         ]
     )
     
+    /// 手少陰心經
     public static let heartOfHandShaoyin = Meridian(
         name: LocalizedText(
             localizedText: [
@@ -184,6 +189,7 @@ public struct Meridian: Equatable {
         ]
     )
 
+    /// 手太陽小腸經
     public static let smallInstestineHandTaiyang = Meridian(
         name: LocalizedText(
             localizedText: [
@@ -216,6 +222,7 @@ public struct Meridian: Equatable {
         ]
     )
     
+    /// 足太陽膀胱經
     public static let bladderOfFootTaiyang = Meridian(
         name: LocalizedText(
             localizedText: [
@@ -296,6 +303,7 @@ public struct Meridian: Equatable {
         ]
     )
     
+    /// 足少陰腎經
     public static let kidneyOfFootShaoyin = Meridian(
         name: LocalizedText(
             localizedText: [
@@ -336,6 +344,7 @@ public struct Meridian: Equatable {
         ]
     )
     
+    /// 手厥陰心包經
     public static let pericardiumOfHandJueyin = Meridian(
         name: LocalizedText(
             localizedText: [
@@ -358,6 +367,7 @@ public struct Meridian: Equatable {
         ]
     )
     
+    /// 手少陽三焦經
     public static let tripleEnergizerOfHandShaoyang = Meridian(
         name: LocalizedText(
             localizedText: [
@@ -393,6 +403,7 @@ public struct Meridian: Equatable {
         ]
     )
     
+    /// 足少陽膽經
     public static let gallbladderOfFootShaoyang = Meridian(
         name: LocalizedText(
             localizedText: [
@@ -450,6 +461,7 @@ public struct Meridian: Equatable {
         ]
     )
     
+    /// 足厥陰肝經
     public static let liverOfFootJueyin = Meridian(
         name: LocalizedText(
             localizedText: [
@@ -484,32 +496,223 @@ public struct Meridian: Equatable {
     }
 }
 
-/// 奇經八脈
-public enum ExtraordinaryMeridian {
+// MARK: -  奇經八脈
+
+extension Meridian {
 
     /// 任脈
-    case conceptionVessel
+    public static let conceptionVessel = Meridian(
+        name: LocalizedText(
+            localizedText: [
+                .en: "Conception Vessel",
+                .zhHans: "任脉",
+                .zhHant: "任脈"
+            ]
+        ),
+        code: "CV",
+        acupoints: [
+            .huiyin,
+            .qugu,
+            .zhongji,
+            .guanyuan,
+            .shimen,
+            .qihai,
+            .yinjiao,
+            .shenque,
+            .shuifen,
+            .xiawan,
+            .jianli,
+            .zhongwan,
+            .shangwan,
+            .juque,
+            .jiuwei,
+            .zhongting,
+            .shanzhong,
+            .yutang,
+            .zigong,
+            .huagai,
+            .xuanji,
+            .tiantu,
+            .lianquan,
+            .chengjiang
+        ]
+    )
 
     /// 督脈
-    case governingVessel
+    public static let governingVessel = Meridian(
+        name: LocalizedText(
+            localizedText: [
+                .en: "Governing Vessel",
+                .zhHans: "督脉",
+                .zhHant: "督脈"
+            ]
+        ),
+        code: "GV",
+        acupoints: [
+            .changqiang,
+            .yaoshu,
+            .yaoyangguan,
+            .mingmen,
+            .xuanshu,
+            .jizhong,
+            .zhongshu,
+            .jinsuo,
+            .zhiyang,
+            .lingtai,
+            .shendao,
+            .shenzhu,
+            .taodao,
+            .dazhui,
+            .yamen,
+            .fengfu,
+            .naohu,
+            .qiangjian,
+            .houding,
+            .baihui,
+            .qianding,
+            .xinhui,
+            .shangxing,
+            .shenting,
+            .suliao,
+            .renzhong,
+            .duiduan,
+            .yinjiao28
+        ]
+    )
 
     /// 衝脈
-    case penetratingVessel
+    public static let thouroughfareVessel = Meridian(
+        name: LocalizedText(
+            localizedText: [
+                .en: "Thouroughfare Vessel",
+                .zhHans: "督脉",
+                .zhHant: "督脈"
+            ]
+        ),
+        code: "TV",
+        acupoints: [
+            .henggu,
+            .dahe,
+            .qixue,
+            .siman,
+            .zhongzhu,
+            .huangshu,
+            .shangqu,
+            .shiguan,
+            .yindu,
+            .futonggu,
+            .youmen
+        ]
+    )
 
     /// 帶脈
-    case girdleVessel
+    public static let beltVessel = Meridian(
+        name: LocalizedText(
+            localizedText: [
+                .en: "Belt Vessel",
+                .zhHans: "带脉",
+                .zhHant: "帶脈"
+            ]
+        ),
+        code: "BV",
+        acupoints: [
+            .daimai,
+            .wushu,
+            .weidao,
+            .jingmen,
+            .juliao29
+        ]
+    )
 
     /// 陰維脈
-    case yinLinkingVessel
+    public static let yinLinkVessel = Meridian(
+        name: LocalizedText(
+            localizedText: [
+                .en: "Yin Link Vessel",
+                .zhHans: "阴维脉",
+                .zhHant: "陰維脈"
+            ]
+        ),
+        code: "YinLV",
+        acupoints: [
+            .zhubin,
+            .fushe,
+            .daheng,
+            .fuai,
+            .qimen,
+            .tiantu,
+            .lianquan
+        ]
+    )
 
     /// 陽維脈
-    case yangLinkingVessel
+    public static let yangLinkVessel = Meridian(
+        name: LocalizedText(
+            localizedText: [
+                .en: "Yang Link Vessel",
+                .zhHans: "阳维脉",
+                .zhHant: "陽維脈"
+            ]
+        ),
+        code: "YangLV",
+        acupoints: [
+            .jinmen,
+            .naoshu,
+            .tianliao,
+            .jianjing,
+            .benshen,
+            .yangbai,
+            .toulinqi,
+            .zhengying,
+            .naokong,
+            .fengchi,
+            .fengfu,
+            .yamen
+        ]
+    )
 
-    /// 陰蹻脈
-    case yinHeelVessel
+    /// 陰蹺脈
+    public static let yinHeelVessel = Meridian(
+        name: LocalizedText(
+            localizedText: [
+                .en: "Yin Heel Vessel",
+                .zhHans: "阴跷脉",
+                .zhHant: "陰蹺脈"
+            ]
+        ),
+        code: "YinHV",
+        acupoints: [
+            .rangu,
+            .zhaohai,
+            .jiaoxin,
+            .qingming
+        ]
+    )
 
-    /// 陽蹻脈
-    case yangHeelVessel
+    /// 陽蹺脈
+    public static let yangHeelVessel = Meridian(
+        name: LocalizedText(
+            localizedText: [
+                .en: "Yang Heel Vessel",
+                .zhHans: "阳跷脉",
+                .zhHant: "陽蹺脈"
+            ]
+        ),
+        code: "YangHV",
+        acupoints: [
+            .shenmai,
+            .pucan,
+            .fuyang,
+            .juliao29,
+            .jianyu,
+            .jugu,
+            .naoshu,
+            .dicang,
+            .juliao,
+            .chengqi,
+            .qingming
+        ]
+    )
 }
 
 public extension EarthlyBranch {

@@ -420,6 +420,29 @@ final class QiTests: XCTestCase {
         XCTAssertEqual(Meridian.pericardiumOfHandJueyin.onDutyHourBranch, .xu)
         XCTAssertEqual(Meridian.tripleEnergizerOfHandShaoyang.onDutyHourBranch, .hai)
     }
+
+    func testMeridianCodes() {
+        XCTAssertEqual(Meridian.lungOfHandTaiyin.code, "LU")
+        XCTAssertEqual(Meridian.largeIntestineOfHandYangming.code, "LI")
+        XCTAssertEqual(Meridian.stomachOfFootYangming.code, "ST")
+        XCTAssertEqual(Meridian.spleenOfFootTaiyin.code, "SP")
+        XCTAssertEqual(Meridian.heartOfHandShaoyin.code, "HT")
+        XCTAssertEqual(Meridian.smallInstestineHandTaiyang.code, "SI")
+        XCTAssertEqual(Meridian.bladderOfFootTaiyang.code, "BL")
+        XCTAssertEqual(Meridian.kidneyOfFootShaoyin.code, "KI")
+        XCTAssertEqual(Meridian.pericardiumOfHandJueyin.code, "PC")
+        XCTAssertEqual(Meridian.tripleEnergizerOfHandShaoyang.code, "TE")
+        XCTAssertEqual(Meridian.gallbladderOfFootShaoyang.code, "GB")
+        XCTAssertEqual(Meridian.liverOfFootJueyin.code, "LR")
+        XCTAssertEqual(Meridian.governingVessel.code, "GV")
+        XCTAssertEqual(Meridian.conceptionVessel.code, "CV")
+        XCTAssertEqual(Meridian.thouroughfareVessel.code, "TV")
+        XCTAssertEqual(Meridian.beltVessel.code, "BV")
+        XCTAssertEqual(Meridian.yinLinkVessel.code, "YinLV")
+        XCTAssertEqual(Meridian.yangLinkVessel.code, "YangLV")
+        XCTAssertEqual(Meridian.yinHeelVessel.code, "YinHV")
+        XCTAssertEqual(Meridian.yangHeelVessel.code, "YangHV")
+    }
 }
 
 private extension Date {
