@@ -993,4 +993,168 @@ public enum Acupoint: String, Decodable {
     
     /// 14.期門
     case qimen
+
+    // MARK: - 任脈
+
+    /// 1.会阴
+    case huiyin
+
+    /// 2.曲骨
+    case qugu
+
+    /// 3.中极
+    case zhongji
+
+    /// 4.关元
+    case guanyuan
+
+    /// 5.石门
+    case shimen
+
+    /// 6.气海
+    case qihai
+
+    /// 7.阴交
+    case yinjiao
+
+    /// 8.神阙
+    case shenque
+
+    /// 9.水分
+    case shuifen
+
+    /// 10.下脘
+    case xiawan
+
+    /// 11.建里
+    case jianli
+
+    /// 12.中脘
+    case zhongwan
+
+    /// 13.上脘
+    case shangwan
+
+    /// 14.巨阙
+    case juque
+
+    /// 15.鸠尾
+    /// jiū wěi
+    case jiuwei
+
+    /// 16.中庭
+    case zhongting
+
+    /// 17.膻中
+    case shanzhong
+
+    /// 18.玉堂
+    case yutang
+
+    /// 19.紫宫
+    case zigong
+
+    /// 20.华盖
+    case huagai
+
+    /// 21.璇玑
+    case xuanji
+
+    /// 22.天突
+    case tiantu
+
+    /// 23.廉泉
+    case lianquan
+
+    /// 24.承浆
+    case chengjiang
+
+    // MARK: - 督脉
+
+    /// 1.长强
+    case changqiang
+
+    /// 2.腰俞
+    case yaoshu
+
+    /// 3.腰阳关
+    case yaoyangguan
+
+    /// 4.命门
+    case mingmen
+
+    /// 5.悬枢 
+    case xuanshu
+
+    /// 6.脊中
+    case jizhong
+
+    /// 7.中枢
+    case zhongshu
+
+    /// 8.筋缩
+    case jinsuo
+
+    /// 9.至阳
+    case zhiyang
+
+    /// 10.灵台
+    case lingtai
+
+    /// 11.神道
+    case shendao
+
+    /// 12.身柱
+    case shenzhu
+
+    /// 13.陶道
+    case taodao
+
+    /// 14.大椎
+    case dazhui
+
+    /// 15.痖门
+    /// yǎ mén
+    case yamen
+
+    /// 16.风府
+    case fengfu
+
+    /// 17.脑户
+    case naohu
+
+    /// 18.强间
+    case qiangjian
+
+    /// 19.后顶
+    case houding
+
+    /// 20.百会
+    case baihui
+
+    /// 21.前顶
+    case qianding
+
+    /// 22.顖会
+    /// xìn
+    case xinhui
+
+    /// 23.上星
+    case shangxing
+
+    /// 24.神庭
+    case shenting
+
+    /// 25.素髎
+    case suliao
+
+    /// 26.水沟（人中）
+    case renzhong
+
+    /// 27.兑端
+    case duiduan
+
+    /// 28.龈交
+    case yinjiao28
+
 }
