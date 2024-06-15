@@ -12,6 +12,95 @@ public struct Meridian: Equatable {
     public let name: LocalizedTextProvider
     public let code: String
     public let acupoints: [Acupoint]
+    public let ebbFlowTime: EarthlyBranch?
+
+    /// 足少陽膽經
+    public static let gallbladderOfFootShaoyang = Meridian(
+        name: LocalizedText(
+            localizedText: [
+                .en: "Gallbladder Meridian of Foot-Shaoyang",
+                .zhHans: "足少阳胆经",
+                .zhHant: "足少陽膽經"
+            ]
+        ),
+        code: "GB",
+        acupoints: [
+            .tongziliao,
+            .tinghui,
+            .shangguan,
+            .hanyan,
+            .xuanlu,
+            .xuanli,
+            .qubin,
+            .shuaigu,
+            .tianchong,
+            .fubai,
+            .touqiaoyin,
+            .wangu12,
+            .benshen,
+            .yangbai,
+            .toulinqi,
+            .muchuang,
+            .zhengying,
+            .chengling,
+            .naokong,
+            .fengchi,
+            .jianjing,
+            .yuanye,
+            .zhejin,
+            .riyue,
+            .jingmen,
+            .daimai,
+            .wushu,
+            .weidao,
+            .juliao29,
+            .huantiao,
+            .fengshi,
+            .zhongdu,
+            .xiyangguan,
+            .yanglingquan,
+            .yangjiao,
+            .waiqiu,
+            .guangming,
+            .yangfu,
+            .xuanzhong,
+            .qiuxu,
+            .zulinqi,
+            .diwuhui,
+            .xiaxi,
+            .zuqiaoyin
+        ],
+        ebbFlowTime: .zi
+    )
+
+    /// 足厥陰肝經
+    public static let liverOfFootJueyin = Meridian(
+        name: LocalizedText(
+            localizedText: [
+                .en: "Liver Meridian of Foot-Jueyin",
+                .zhHans: "足厥阴肝经",
+                .zhHant: "足厥陰肝經"
+            ]
+        ),
+        code: "LR",
+        acupoints: [
+            .dadun,
+            .hangjian,
+            .taichong,
+            .zhongfeng,
+            .ligou,
+            .zhongdu6,
+            .xiguan,
+            .ququan,
+            .yinbao,
+            .zuwuli,
+            .yinlian,
+            .jimai,
+            .zhangmen,
+            .qimen
+        ],
+        ebbFlowTime: .chou
+    )
 
     /// 手太陰肺經
     public static let lungOfHandTaiyin = Meridian(
@@ -35,7 +124,8 @@ public struct Meridian: Equatable {
             .taiyuan,
             .yuji,
             .shaoshang
-        ]
+        ],
+        ebbFlowTime: .yin
     )
 
     /// 手陽明大腸經
@@ -69,7 +159,8 @@ public struct Meridian: Equatable {
             .futu,
             .heliao,
             .yingxiang
-        ]
+        ],
+        ebbFlowTime: .mao
     )
     
     /// 足陽明胃經
@@ -128,7 +219,8 @@ public struct Meridian: Equatable {
             .xiangu,
             .neiting,
             .lidui
-        ]
+        ],
+        ebbFlowTime: .chen
     )
     
     /// 足太陰脾經
@@ -163,7 +255,8 @@ public struct Meridian: Equatable {
             .xiongxiang,
             .zhourong,
             .dabao
-        ]
+        ],
+        ebbFlowTime: .si
     )
     
     /// 手少陰心經
@@ -186,7 +279,8 @@ public struct Meridian: Equatable {
             .shenmen,
             .shaofu,
             .shaochong
-        ]
+        ],
+        ebbFlowTime: .wu
     )
 
     /// 手太陽小腸經
@@ -219,7 +313,8 @@ public struct Meridian: Equatable {
             .tianrong,
             .quanliao,
             .tinggong
-        ]
+        ],
+        ebbFlowTime: .wei
     )
     
     /// 足太陽膀胱經
@@ -300,7 +395,8 @@ public struct Meridian: Equatable {
             .shugu,
             .zutonggu,
             .zhiyin
-        ]
+        ],
+        ebbFlowTime: .shen
     )
     
     /// 足少陰腎經
@@ -341,7 +437,8 @@ public struct Meridian: Equatable {
             .shencang,
             .yuzhong,
             .shufu
-        ]
+        ],
+        ebbFlowTime: .you
     )
     
     /// 手厥陰心包經
@@ -364,7 +461,8 @@ public struct Meridian: Equatable {
             .daling,
             .laogong,
             .zhongchong
-        ]
+        ],
+        ebbFlowTime: .xu
     )
     
     /// 手少陽三焦經
@@ -400,93 +498,8 @@ public struct Meridian: Equatable {
             .ermen,
             .erheliao,
             .sikongzhu
-        ]
-    )
-    
-    /// 足少陽膽經
-    public static let gallbladderOfFootShaoyang = Meridian(
-        name: LocalizedText(
-            localizedText: [
-                .en: "Gallbladder Meridian of Foot-Shaoyang",
-                .zhHans: "足少阳胆经",
-                .zhHant: "足少陽膽經"
-            ]
-        ),
-        code: "GB",
-        acupoints: [
-            .tongziliao,
-            .tinghui,
-            .shangguan,
-            .hanyan,
-            .xuanlu,
-            .xuanli,
-            .qubin,
-            .shuaigu,
-            .tianchong,
-            .fubai,
-            .touqiaoyin,
-            .wangu12,
-            .benshen,
-            .yangbai,
-            .toulinqi,
-            .muchuang,
-            .zhengying,
-            .chengling,
-            .naokong,
-            .fengchi,
-            .jianjing,
-            .yuanye,
-            .zhejin,
-            .riyue,
-            .jingmen,
-            .daimai,
-            .wushu,
-            .weidao,
-            .juliao29,
-            .huantiao,
-            .fengshi,
-            .zhongdu,
-            .xiyangguan,
-            .yanglingquan,
-            .yangjiao,
-            .waiqiu,
-            .guangming,
-            .yangfu,
-            .xuanzhong,
-            .qiuxu,
-            .zulinqi,
-            .diwuhui,
-            .xiaxi,
-            .zuqiaoyin
-        ]
-    )
-    
-    /// 足厥陰肝經
-    public static let liverOfFootJueyin = Meridian(
-        name: LocalizedText(
-            localizedText: [
-                .en: "Liver Meridian of Foot-Jueyin",
-                .zhHans: "足厥阴肝经",
-                .zhHant: "足厥陰肝經"
-            ]
-        ),
-        code: "LR",
-        acupoints: [
-            .dadun,
-            .hangjian,
-            .taichong,
-            .zhongfeng,
-            .ligou,
-            .zhongdu6,
-            .xiguan,
-            .ququan,
-            .yinbao,
-            .zuwuli,
-            .yinlian,
-            .jimai,
-            .zhangmen,
-            .qimen
-        ]
+        ],
+        ebbFlowTime: .hai
     )
 
     // MARK: - Equatable
@@ -535,7 +548,8 @@ extension Meridian {
             .tiantu,
             .lianquan,
             .chengjiang
-        ]
+        ],
+        ebbFlowTime: nil
     )
 
     /// 督脈
@@ -577,7 +591,8 @@ extension Meridian {
             .renzhong,
             .duiduan,
             .yinjiao28
-        ]
+        ],
+        ebbFlowTime: nil
     )
 
     /// 衝脈
@@ -602,7 +617,8 @@ extension Meridian {
             .yindu,
             .futonggu,
             .youmen
-        ]
+        ],
+        ebbFlowTime: nil
     )
 
     /// 帶脈
@@ -621,7 +637,8 @@ extension Meridian {
             .weidao,
             .jingmen,
             .juliao29
-        ]
+        ],
+        ebbFlowTime: nil
     )
 
     /// 陰維脈
@@ -642,7 +659,8 @@ extension Meridian {
             .qimen,
             .tiantu,
             .lianquan
-        ]
+        ],
+        ebbFlowTime: nil
     )
 
     /// 陽維脈
@@ -668,7 +686,8 @@ extension Meridian {
             .fengchi,
             .fengfu,
             .yamen
-        ]
+        ],
+        ebbFlowTime: nil
     )
 
     /// 陰蹺脈
@@ -686,7 +705,8 @@ extension Meridian {
             .zhaohai,
             .jiaoxin,
             .qingming
-        ]
+        ],
+        ebbFlowTime: nil
     )
 
     /// 陽蹺脈
@@ -711,7 +731,8 @@ extension Meridian {
             .juliao,
             .chengqi,
             .qingming
-        ]
+        ],
+        ebbFlowTime: nil
     )
 }
 
