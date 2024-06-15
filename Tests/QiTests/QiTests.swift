@@ -443,6 +443,12 @@ final class QiTests: XCTestCase {
         XCTAssertEqual(Meridian.yinHeelVessel.code, "YinHV")
         XCTAssertEqual(Meridian.yangHeelVessel.code, "YangHV")
     }
+
+    func testAcupointLanguage() {
+        XCTAssertEqual(Acupoint.allCases.count, Acupoint.textForIterables(for: .zhHans).count)
+        XCTAssertEqual(Acupoint.allCases.count, Acupoint.textForIterables(for: .zhHant).count)
+        XCTAssertEqual(Acupoint.allCases.count, Acupoint.textForIterables(for: .en).count)
+    }
 }
 
 private extension Date {
